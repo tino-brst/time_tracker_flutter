@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../services/auth_service.dart';
 import '../widgets/custom_flat_button.dart';
+import 'email_sign_in_screen.dart';
 
 class SignInScreen extends StatelessWidget {
   final AuthService authService;
@@ -15,11 +16,11 @@ class SignInScreen extends StatelessWidget {
         title: Text('Time Tracker'),
         elevation: 0,
       ),
-      body: _buildContent(),
+      body: _buildContent(context),
     );
   }
 
-  Widget _buildContent() {
+  Widget _buildContent(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -55,7 +56,7 @@ class SignInScreen extends StatelessWidget {
             'Sign in with Email',
             color: Colors.teal,
             textColor: Colors.white,
-            onPressed: () {},
+            onPressed: () => _signInWithEmail(context),
           ),
           SizedBox(height: 24),
           Text(
@@ -89,5 +90,14 @@ class SignInScreen extends StatelessWidget {
     } catch (error) {
       print(error.toString());
     }
+  }
+
+  Future<void> _signInWithEmail(BuildContext context) async {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        fullscreenDialog: true,
+        builder: (_) => EmailSignInScreen(),
+      ),
+    );
   }
 }
