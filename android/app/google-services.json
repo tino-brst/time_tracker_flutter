@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "486203040330",
+    "firebase_url": "https://time-tracker-8a1cd.firebaseio.com",
+    "project_id": "time-tracker-8a1cd",
+    "storage_bucket": "time-tracker-8a1cd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:486203040330:android:a950350ec6cb151c81bcb3",
+        "android_client_info": {
+          "package_name": "com.agustin_burset.time_tracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "486203040330-09rrfeij7hk0ci9ljfopn4kbp3joq2ig.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.agustin_burset.time_tracker",
+            "certificate_hash": "792c601ca7f867f342bc412ba0e1b454ac210ea6"
+          }
+        },
+        {
+          "client_id": "486203040330-8rksq68af9d5326glclql0h4epo110ct.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCe3lrv5rU48DAbc5B__mSJ15B2tvpVBp8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "486203040330-8rksq68af9d5326glclql0h4epo110ct.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "486203040330-81eqraokndm7maq9gqv2k52p2stvn9gf.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.agustinBurset.timeTracker"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
