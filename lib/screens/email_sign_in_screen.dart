@@ -62,9 +62,12 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         TextField(
+          // Email
           controller: _emailController,
           keyboardType: TextInputType.emailAddress,
+          textInputAction: TextInputAction.next,
           autofocus: true,
+          autocorrect: false,
           decoration: InputDecoration(
             labelText: 'Email',
             hintText: 'example@email.com',
@@ -72,7 +75,9 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
         ),
         SizedBox(height: 12),
         TextField(
+          // Password
           controller: _passwordController,
+          textInputAction: TextInputAction.done,
           obscureText: true,
           decoration: InputDecoration(
             labelText: 'Password',
@@ -80,6 +85,7 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
         ),
         SizedBox(height: 32),
         CustomFlatButton(
+          // Sign in | Register
           primaryButtonText,
           color: Colors.indigo,
           textColor: Colors.white,
@@ -87,6 +93,7 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
         ),
         SizedBox(height: 10),
         CustomFlatButton(
+          // Toggle form
           secondaryButtonText,
           color: Colors.transparent,
           textColor: Colors.black.withOpacity(0.7),
