@@ -46,6 +46,7 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
 
   String get _email => _emailController.text;
   String get _password => _passwordController.text;
+  bool get _isAnyFieldEmpty => _email.isEmpty || _password.isEmpty;
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +73,7 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
           primaryButtonText,
           color: Colors.indigo,
           textColor: Colors.white,
-          onPressed: _submit,
+          onPressed: _isAnyFieldEmpty ? null : _submit,
         ),
         SizedBox(height: 10),
         CustomFlatButton(
@@ -95,6 +96,7 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
       autofocus: true,
       autocorrect: false,
       decoration: InputDecoration(labelText: 'Email'),
+      onChanged: (_) => setState(() {}),
       onEditingComplete: _onEmailEditingComplete,
     );
   }
@@ -106,6 +108,7 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
       textInputAction: TextInputAction.done,
       obscureText: true,
       decoration: InputDecoration(labelText: 'Password'),
+      onChanged: (_) => setState(() {}),
       onEditingComplete: _submit,
     );
   }

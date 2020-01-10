@@ -10,8 +10,8 @@ class CustomFlatButton extends StatelessWidget {
 
   const CustomFlatButton(
     this.text, {
-    this.color,
-    this.textColor,
+    this.color = Colors.transparent,
+    this.textColor = Colors.black,
     this.padding,
     this.trailing,
     @required this.onPressed,
@@ -39,6 +39,8 @@ class CustomFlatButton extends StatelessWidget {
       padding: padding ?? EdgeInsets.symmetric(vertical: 12, horizontal: 12),
       color: color,
       onPressed: onPressed,
+      disabledColor: color.withOpacity(0.5),
+      disabledTextColor: textColor,
       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(4),
