@@ -96,7 +96,7 @@ class SignInScreen extends StatelessWidget {
     Navigator.of(context).push(
       MaterialPageRoute(
         fullscreenDialog: true,
-        builder: (_) => EmailSignInScreen(),
+        builder: (_) => EmailSignInScreen(authService: authService),
       ),
     );
   }

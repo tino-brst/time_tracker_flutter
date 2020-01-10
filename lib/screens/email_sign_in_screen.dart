@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:time_tracker/services/auth_service.dart';
 import 'package:time_tracker/widgets/custom_flat_button.dart';
 
 class EmailSignInScreen extends StatelessWidget {
+  final AuthService authService;
+
+  EmailSignInScreen({@required this.authService});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -11,7 +16,7 @@ class EmailSignInScreen extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: EmailSignInForm(),
+        child: EmailSignInForm(authService: authService),
       ),
     );
   }
@@ -23,6 +28,10 @@ enum EmailSignInFormType {
 }
 
 class EmailSignInForm extends StatefulWidget {
+  final AuthService authService;
+
+  EmailSignInForm({@required this.authService});
+
   @override
   _EmailSignInFormState createState() => _EmailSignInFormState();
 }
@@ -31,6 +40,9 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   var _formType = EmailSignInFormType.signIn;
+
+  String get _email => _emailController.text;
+  String get _password => _passwordController.text;
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +82,7 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
           primaryButtonText,
           color: Colors.indigo,
           textColor: Colors.white,
-          onPressed: () {},
+          onPressed: _submit,
         ),
         SizedBox(height: 10),
         CustomFlatButton(
@@ -87,5 +99,24 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
     setState(() {
       _formType = _formType == EmailSignInFormType.register ? EmailSignInFormType.signIn : EmailSignInFormType.register;
     });
+  }
+
+  void _submit() async {
+    try {
+      if (_formType == EmailSignInFormType.signIn) {
+        await widget.authService.signInWithEmailAndPassword(
+          email: _email,
+          password: _password,
+        );
+      } else {
+        await widget.authService.createUserWithEmailAndPassword(
+          email: _email,
+          password: _password,
+        );
+      }
+      Navigator.of(context).pop();
+    } catch (error) {
+      print(error.toString());
+    }
   }
 }
