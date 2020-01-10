@@ -49,7 +49,7 @@ class SignInScreen extends StatelessWidget {
             color: Color(0xFF3C599D),
             textColor: Colors.white,
             trailing: Image.asset('images/facebook-logo.png'),
-            onPressed: () {},
+            onPressed: null,
           ),
           SizedBox(height: 12),
           CustomFlatButton(
