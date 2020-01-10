@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:time_tracker/services/auth_service.dart';
-import 'package:time_tracker/widgets/custom_flat_button.dart';
+
+import '../services/auth_service.dart';
+import '../widgets/custom_flat_button.dart';
 
 class EmailSignInScreen extends StatelessWidget {
   final AuthService authService;
