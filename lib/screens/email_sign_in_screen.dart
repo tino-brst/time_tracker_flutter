@@ -40,6 +40,8 @@ class EmailSignInForm extends StatefulWidget {
 class _EmailSignInFormState extends State<EmailSignInForm> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _emailFocusNode = FocusNode();
+  final _passwordFocusNode = FocusNode();
   var _formType = EmailSignInFormType.signIn;
 
   String get _email => _emailController.text;
@@ -61,28 +63,9 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
-        TextField(
-          // Email
-          controller: _emailController,
-          keyboardType: TextInputType.emailAddress,
-          textInputAction: TextInputAction.next,
-          autofocus: true,
-          autocorrect: false,
-          decoration: InputDecoration(
-            labelText: 'Email',
-            hintText: 'example@email.com',
-          ),
-        ),
+        _buildEmailTextField(),
         SizedBox(height: 12),
-        TextField(
-          // Password
-          controller: _passwordController,
-          textInputAction: TextInputAction.done,
-          obscureText: true,
-          decoration: InputDecoration(
-            labelText: 'Password',
-          ),
-        ),
+        _buildPasswordTextField(),
         SizedBox(height: 32),
         CustomFlatButton(
           // Sign in | Register
@@ -101,6 +84,34 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
         )
       ],
     );
+  }
+
+  Widget _buildEmailTextField() {
+    return TextField(
+      controller: _emailController,
+      focusNode: _emailFocusNode,
+      keyboardType: TextInputType.emailAddress,
+      textInputAction: TextInputAction.next,
+      autofocus: true,
+      autocorrect: false,
+      decoration: InputDecoration(labelText: 'Email'),
+      onEditingComplete: _onEmailEditingComplete,
+    );
+  }
+
+  Widget _buildPasswordTextField() {
+    return TextField(
+      controller: _passwordController,
+      focusNode: _passwordFocusNode,
+      textInputAction: TextInputAction.done,
+      obscureText: true,
+      decoration: InputDecoration(labelText: 'Password'),
+      onEditingComplete: _submit,
+    );
+  }
+
+  void _onEmailEditingComplete() {
+    FocusScope.of(context).requestFocus(_passwordFocusNode);
   }
 
   void _toggleFormType() {
