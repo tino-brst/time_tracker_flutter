@@ -1,3 +1,5 @@
+import 'package:meta/meta.dart';
+
 import '../entities/user.dart';
 
 abstract class AuthService {
@@ -5,5 +7,7 @@ abstract class AuthService {
   Future<User> get currentUser;
   Future<User> signInAnonymously();
   Future<User> signInWithGoogle();
+  Future<User> signInWithEmailAndPassword({@required String email, @required String password});
+  Future<User> createUserWithEmailAndPassword({@required String email, @required String password});
   Future<void> signOut();
 }

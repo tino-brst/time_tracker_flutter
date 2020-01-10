@@ -62,6 +62,20 @@ class FirebaseAuthService implements AuthService {
   }
 
   @override
+  Future<User> signInWithEmailAndPassword({String email, String password}) async {
+    final authResult = await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
+    final firebaseUser = authResult.user;
+    return UserModel.fromFirebaseUser(firebaseUser);
+  }
+
+  @override
+  Future<User> createUserWithEmailAndPassword({String email, String password}) async {
+    final authResult = await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
+    final firebaseUser = authResult.user;
+    return UserModel.fromFirebaseUser(firebaseUser);
+  }
+
+  @override
   Future<void> signOut() async {
     await _googleSignIn.signOut();
     await _firebaseAuth.signOut();
