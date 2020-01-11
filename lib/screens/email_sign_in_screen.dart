@@ -42,6 +42,7 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
   final _passwordFocusNode = FocusNode();
   EmailSignInFormType _formType = EmailSignInFormType.signIn;
   bool _areErrorMessagesEnabled = false;
+  bool _isAwaitingResponse = false;
 
   String get _email => _emailController.text;
   String get _password => _passwordController.text;
@@ -72,15 +73,14 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
           primaryButtonText,
           color: Colors.indigo,
           textColor: Colors.white,
-          onPressed: _isEveryFieldValid ? _submit : null,
+          onPressed: _isEveryFieldValid && !_isAwaitingResponse ? _submit : null,
         ),
         SizedBox(height: 10),
         CustomFlatButton(
           // Toggle form
           secondaryButtonText,
-          color: Colors.transparent,
           textColor: Colors.black.withOpacity(0.7),
-          onPressed: _toggleFormType,
+          onPressed: !_isAwaitingResponse ? _toggleFormType : null,
         )
       ],
     );
@@ -100,6 +100,7 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
       decoration: InputDecoration(
         labelText: 'Email',
         errorText: showErrorMessage ? widget.invalidEmailText : null,
+        enabled: !_isAwaitingResponse,
       ),
       onChanged: (_) => setState(() {}),
       onEditingComplete: _onEmailEditingComplete,
@@ -116,6 +117,7 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
       decoration: InputDecoration(
         labelText: 'Password',
         errorText: showErrorMessage ? widget.invalidPasswordText : null,
+        enabled: !_isAwaitingResponse,
       ),
       onChanged: (_) => setState(() {}),
       onEditingComplete: _submit,
@@ -136,6 +138,7 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
   void _submit() async {
     setState(() {
       _areErrorMessagesEnabled = true;
+      _isAwaitingResponse = true;
     });
 
     try {
@@ -153,6 +156,10 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
       Navigator.of(context).pop();
     } catch (error) {
       print(error.toString());
+    } finally {
+      setState(() {
+        _isAwaitingResponse = false;
+      });
     }
   }
 }
