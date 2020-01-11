@@ -24,10 +24,7 @@ class EmailSignInScreen extends StatelessWidget {
   }
 }
 
-enum EmailSignInFormType {
-  signIn,
-  register,
-}
+enum EmailSignInFormType { signIn, register }
 
 class EmailSignInForm extends StatefulWidget with EmailAndPasswordValidators {
   final AuthService authService;
@@ -92,7 +89,7 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
   // TODO investigate TextFields vs FormTextFields
 
   Widget _buildEmailTextField() {
-    final bool showErrorMessage = _areErrorMessagesEnabled && !widget.emailValidator.isValid(_email);
+    final showErrorMessage = _areErrorMessagesEnabled && !widget.emailValidator.isValid(_email);
     return TextField(
       controller: _emailController,
       focusNode: _emailFocusNode,
@@ -110,7 +107,7 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
   }
 
   Widget _buildPasswordTextField() {
-    final bool showErrorMessage = _areErrorMessagesEnabled && !widget.passwordValidator.isValid(_password);
+    final showErrorMessage = _areErrorMessagesEnabled && !widget.passwordValidator.isValid(_password);
     return TextField(
       controller: _passwordController,
       focusNode: _passwordFocusNode,
