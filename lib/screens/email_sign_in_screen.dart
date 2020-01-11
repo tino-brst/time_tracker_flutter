@@ -16,9 +16,11 @@ class EmailSignInScreen extends StatelessWidget {
         title: Text('Sign in'),
         elevation: 0,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: EmailSignInForm(authService: authService),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: EmailSignInForm(authService: authService),
+        ),
       ),
     );
   }
