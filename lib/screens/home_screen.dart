@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../services/auth_service.dart';
 import '../widgets/platform_alert_dialog.dart';
 
 class HomeScreen extends StatelessWidget {
-  final AuthService authService;
-
-  HomeScreen({@required this.authService});
-
   @override
   Widget build(BuildContext context) {
+    final authService = Provider.of<AuthService>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Home Page'),
@@ -17,14 +16,14 @@ class HomeScreen extends StatelessWidget {
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.exit_to_app, color: Colors.white),
-            onPressed: () => _signOut(context),
+            onPressed: () => _signOut(context, authService),
           )
         ],
       ),
     );
   }
 
-  void _signOut(BuildContext context) async {
+  void _signOut(BuildContext context, AuthService authService) async {
     final didConfirmSignOut = await PlatformAlertDialog(
       title: 'Sign Out',
       content: 'Are you sure you want to sign out?',

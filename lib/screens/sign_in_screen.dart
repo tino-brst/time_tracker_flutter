@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../services/auth_service.dart';
 import '../widgets/custom_flat_button.dart';
 import 'email_sign_in_screen.dart';
 
 class SignInScreen extends StatelessWidget {
-  final AuthService authService;
-
-  SignInScreen({@required this.authService});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,6 +18,8 @@ class SignInScreen extends StatelessWidget {
   }
 
   Widget _buildContent(BuildContext context) {
+    final authService = Provider.of<AuthService>(context);
+
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -41,7 +40,7 @@ class SignInScreen extends StatelessWidget {
             color: Colors.grey.shade300,
             textColor: Colors.black87,
             trailing: Image.asset('images/google-logo.png'),
-            onPressed: _signInWithGoogle,
+            onPressed: () => _signInWithGoogle(authService),
           ),
           SizedBox(height: 12),
           CustomFlatButton(
@@ -69,14 +68,14 @@ class SignInScreen extends StatelessWidget {
             'Sign in anonymously',
             padding: EdgeInsets.zero,
             textColor: Colors.black87,
-            onPressed: _signInAnonymously,
+            onPressed: () => _signInAnonymously(authService),
           ),
         ],
       ),
     );
   }
 
-  Future<void> _signInAnonymously() async {
+  Future<void> _signInAnonymously(AuthService authService) async {
     try {
       await authService.signInAnonymously();
     } catch (error) {
@@ -84,7 +83,7 @@ class SignInScreen extends StatelessWidget {
     }
   }
 
-  Future<void> _signInWithGoogle() async {
+  Future<void> _signInWithGoogle(AuthService authService) async {
     try {
       await authService.signInWithGoogle();
     } catch (error) {
@@ -96,7 +95,7 @@ class SignInScreen extends StatelessWidget {
     Navigator.of(context).push(
       MaterialPageRoute(
         fullscreenDialog: true,
-        builder: (_) => EmailSignInScreen(authService: authService),
+        builder: (_) => EmailSignInScreen(),
       ),
     );
   }

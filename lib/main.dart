@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'screens/landing_screen.dart';
+import 'services/auth_service.dart';
 import 'services/firebase_auth_service.dart';
 
 void main() => runApp(TimeTracker());
@@ -8,10 +10,13 @@ void main() => runApp(TimeTracker());
 class TimeTracker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Time Tracker',
-      theme: ThemeData(primarySwatch: Colors.indigo),
-      home: LandingScreen(authService: FirebaseAuthService()),
+    return Provider<AuthService>(
+      create: (_) => FirebaseAuthService(),
+      child: MaterialApp(
+        title: 'Time Tracker',
+        theme: ThemeData(primarySwatch: Colors.indigo),
+        home: LandingScreen(),
+      ),
     );
   }
 }

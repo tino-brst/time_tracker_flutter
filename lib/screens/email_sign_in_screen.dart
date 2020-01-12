@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../core/validators.dart';
 import '../services/auth_service.dart';
@@ -6,10 +7,6 @@ import '../widgets/custom_flat_button.dart';
 import '../widgets/platform_alert_dialog.dart';
 
 class EmailSignInScreen extends StatelessWidget {
-  final AuthService authService;
-
-  EmailSignInScreen({@required this.authService});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,7 +17,7 @@ class EmailSignInScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: EmailSignInForm(authService: authService),
+          child: EmailSignInForm(),
         ),
       ),
     );
@@ -30,10 +27,6 @@ class EmailSignInScreen extends StatelessWidget {
 enum EmailSignInFormType { signIn, register }
 
 class EmailSignInForm extends StatefulWidget with EmailAndPasswordValidators {
-  final AuthService authService;
-
-  EmailSignInForm({@required this.authService});
-
   @override
   _EmailSignInFormState createState() => _EmailSignInFormState();
 }
@@ -43,6 +36,7 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
   final _passwordController = TextEditingController();
   final _emailFocusNode = FocusNode();
   final _passwordFocusNode = FocusNode();
+
   EmailSignInFormType _formType = EmailSignInFormType.signIn;
   bool _areErrorMessagesEnabled = false;
   bool _isAwaitingResponse = false;
@@ -50,6 +44,7 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
   String get _email => _emailController.text;
   String get _password => _passwordController.text;
   bool get _isEveryFieldValid => widget.emailValidator.isValid(_email) && widget.passwordValidator.isValid(_password);
+  bool get _isSubmitEnabled => _isEveryFieldValid && !_isAwaitingResponse;
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +71,7 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
           primaryButtonText,
           color: Colors.indigo,
           textColor: Colors.white,
-          onPressed: _isEveryFieldValid && !_isAwaitingResponse ? _submit : null,
+          onPressed: _isSubmitEnabled ? _submit : null,
         ),
         SizedBox(height: 10),
         CustomFlatButton(
@@ -148,13 +143,14 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
     });
 
     try {
+      final authService = Provider.of<AuthService>(context, listen: false);
       if (_formType == EmailSignInFormType.signIn) {
-        await widget.authService.signInWithEmailAndPassword(
+        await authService.signInWithEmailAndPassword(
           email: _email,
           password: _password,
         );
       } else {
-        await widget.authService.createUserWithEmailAndPassword(
+        await authService.createUserWithEmailAndPassword(
           email: _email,
           password: _password,
         );
