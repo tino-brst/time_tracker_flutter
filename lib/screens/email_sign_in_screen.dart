@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../core/validators.dart';
 import '../services/auth_service.dart';
 import '../widgets/custom_flat_button.dart';
+import '../widgets/platform_alert_dialog.dart';
 
 class EmailSignInScreen extends StatelessWidget {
   final AuthService authService;
@@ -160,21 +161,11 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
       }
       Navigator.of(context).pop();
     } catch (error) {
-      showDialog(
-        context: context,
-        builder: (_) {
-          return AlertDialog(
-            title: Text('Sign in failed'),
-            content: SingleChildScrollView(child: Text(error.toString())),
-            actions: <Widget>[
-              FlatButton(
-                child: Text('Ok'),
-                onPressed: () => Navigator.of(context).pop(),
-              ),
-            ],
-          );
-        },
-      );
+      PlatformAlertDialog(
+        title: 'Sign In Failed',
+        content: error.toString(),
+        primaryActionText: 'OK',
+      ).show(context);
     } finally {
       setState(() {
         _isAwaitingResponse = false;
