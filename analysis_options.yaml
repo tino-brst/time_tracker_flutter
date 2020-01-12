@@ -1,0 +1,17 @@
+# Effective Dart base linter configuration
+include: package:effective_dart/analysis_options.yaml
+
+# Disabled rules
+linter:
+  rules:
+    public_member_api_docs: false
+    lines_longer_than_80_chars: false
+
+# Changes to the default severity of enabled rules (ignore|info|warning|error)
+analyser:
+  errors:
+    one_member_abstracts: info
+    avoid_catches_without_on_clauses: info
+
+# To suppress a specific rule on a specific line of code, put an 
+# ignore comment above the line of code (e.g: // ignore: name_of_the_rule)
