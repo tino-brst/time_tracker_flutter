@@ -168,4 +168,13 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
       });
     }
   }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    _emailFocusNode.dispose();
+    _passwordFocusNode.dispose();
+  }
 }
