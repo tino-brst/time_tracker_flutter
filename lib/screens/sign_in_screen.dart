@@ -5,7 +5,14 @@ import '../services/auth_service.dart';
 import '../widgets/custom_flat_button.dart';
 import 'email_sign_in_screen.dart';
 
-class SignInScreen extends StatelessWidget {
+class SignInScreen extends StatefulWidget {
+  @override
+  _SignInScreenState createState() => _SignInScreenState();
+}
+
+class _SignInScreenState extends State<SignInScreen> {
+  bool _isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,12 +33,10 @@ class SignInScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          Text(
-            'Sign in',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontWeight: FontWeight.w600,
-              fontSize: 32,
+          SizedBox(
+            height: 50,
+            child: Center(
+              child: _buildHeader(),
             ),
           ),
           SizedBox(height: 48),
@@ -40,7 +45,7 @@ class SignInScreen extends StatelessWidget {
             color: Colors.grey.shade300,
             textColor: Colors.black87,
             trailing: Image.asset('images/google-logo.png'),
-            onPressed: () => _signInWithGoogle(authService),
+            onPressed: _isLoading ? null : () => _signInWithGoogle(authService),
           ),
           SizedBox(height: 12),
           CustomFlatButton(
@@ -55,7 +60,7 @@ class SignInScreen extends StatelessWidget {
             'Sign in with Email',
             color: Colors.teal,
             textColor: Colors.white,
-            onPressed: () => _signInWithEmail(context),
+            onPressed: _isLoading ? null : () => _signInWithEmail(context),
           ),
           SizedBox(height: 24),
           Text(
@@ -68,26 +73,47 @@ class SignInScreen extends StatelessWidget {
             'Sign in anonymously',
             padding: EdgeInsets.zero,
             textColor: Colors.black87,
-            onPressed: () => _signInAnonymously(authService),
+            onPressed: _isLoading ? null : () => _signInAnonymously(authService),
           ),
         ],
       ),
     );
   }
 
+  Widget _buildHeader() {
+    if (_isLoading) {
+      return CircularProgressIndicator();
+    } else {
+      return Text(
+        'Sign in',
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          fontWeight: FontWeight.w600,
+          fontSize: 32,
+        ),
+      );
+    }
+  }
+
   Future<void> _signInAnonymously(AuthService authService) async {
     try {
+      setState(() => _isLoading = true);
       await authService.signInAnonymously();
     } catch (error) {
       print(error.toString());
+    } finally {
+      setState(() => _isLoading = false);
     }
   }
 
   Future<void> _signInWithGoogle(AuthService authService) async {
     try {
+      setState(() => _isLoading = true);
       await authService.signInWithGoogle();
     } catch (error) {
       print(error.toString());
+    } finally {
+      setState(() => _isLoading = false);
     }
   }
 

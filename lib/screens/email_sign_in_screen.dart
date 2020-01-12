@@ -39,12 +39,12 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
 
   EmailSignInFormType _formType = EmailSignInFormType.signIn;
   bool _areErrorMessagesEnabled = false;
-  bool _isAwaitingResponse = false;
+  bool _isLoading = false;
 
   String get _email => _emailController.text;
   String get _password => _passwordController.text;
   bool get _isEveryFieldValid => widget.emailValidator.isValid(_email) && widget.passwordValidator.isValid(_password);
-  bool get _isSubmitEnabled => _isEveryFieldValid && !_isAwaitingResponse;
+  bool get _isSubmitEnabled => _isEveryFieldValid && !_isLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +78,7 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
           // Toggle form
           secondaryButtonText,
           textColor: Colors.black.withOpacity(0.7),
-          onPressed: !_isAwaitingResponse ? _toggleFormType : null,
+          onPressed: !_isLoading ? _toggleFormType : null,
         )
       ],
     );
@@ -98,7 +98,7 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
       decoration: InputDecoration(
         labelText: 'Email',
         errorText: showErrorMessage ? widget.invalidEmailText : null,
-        enabled: !_isAwaitingResponse,
+        enabled: !_isLoading,
       ),
       onChanged: (_) => setState(() {}),
       onEditingComplete: _onEmailEditingComplete,
@@ -115,7 +115,7 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
       decoration: InputDecoration(
         labelText: 'Password',
         errorText: showErrorMessage ? widget.invalidPasswordText : null,
-        enabled: !_isAwaitingResponse,
+        enabled: !_isLoading,
       ),
       onChanged: (_) => setState(() {}),
       onEditingComplete: _submit,
@@ -139,7 +139,7 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
   void _submit() async {
     setState(() {
       _areErrorMessagesEnabled = true;
-      _isAwaitingResponse = true;
+      _isLoading = true;
     });
 
     try {
@@ -164,7 +164,7 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
       ).show(context);
     } finally {
       setState(() {
-        _isAwaitingResponse = false;
+        _isLoading = false;
       });
     }
   }
