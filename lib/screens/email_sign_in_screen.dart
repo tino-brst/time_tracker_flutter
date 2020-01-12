@@ -160,7 +160,21 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
       }
       Navigator.of(context).pop();
     } catch (error) {
-      print(error.toString());
+      showDialog(
+        context: context,
+        builder: (_) {
+          return AlertDialog(
+            title: Text('Sign in failed'),
+            content: SingleChildScrollView(child: Text(error.toString())),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('Ok'),
+                onPressed: () => Navigator.of(context).pop(),
+              ),
+            ],
+          );
+        },
+      );
     } finally {
       setState(() {
         _isAwaitingResponse = false;
