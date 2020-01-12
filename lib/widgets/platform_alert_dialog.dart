@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'platform_alert_dialog_action.dart';
-import 'platform_widget.dart';
+import 'stateless_platform_widget.dart';
 
 class PlatformAlertDialog extends StatelessPlatformWidget {
   final String title;

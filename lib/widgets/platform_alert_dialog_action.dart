@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'platform_widget.dart';
+import 'stateless_platform_widget.dart';
 
 class PlatformAlertDialogAction extends StatelessPlatformWidget {
   final Widget child;
