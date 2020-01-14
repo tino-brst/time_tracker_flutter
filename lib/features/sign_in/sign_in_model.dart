@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 
-import '../services/auth_service.dart';
+import '../../services/auth_service.dart';
 
 class SignInModel extends ChangeNotifier {
   final AuthService _authService;

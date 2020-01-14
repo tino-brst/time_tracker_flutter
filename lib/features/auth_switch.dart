@@ -3,11 +3,11 @@ import 'package:provider/provider.dart';
 
 import '../entities/user.dart';
 import '../services/auth_service.dart';
-import 'home_screen.dart';
-import 'sign_in_model.dart';
-import 'sign_in_screen.dart';
+import 'home/home_screen.dart';
+import 'sign_in/sign_in_model.dart';
+import 'sign_in/sign_in_screen.dart';
 
-class LandingScreen extends StatelessWidget {
+class AuthSwitch extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authService = Provider.of<AuthService>(context, listen: false);

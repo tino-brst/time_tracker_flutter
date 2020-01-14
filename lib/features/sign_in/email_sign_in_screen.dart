@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../core/validators.dart';
-import '../services/auth_service.dart';
-import '../widgets/custom_flat_button.dart';
-import '../widgets/platform_alert_dialog.dart';
+import '../../core/validators.dart';
+import '../../services/auth_service.dart';
+import '../../widgets/custom_flat_button.dart';
+import '../../widgets/platform_alert_dialog.dart';
 
 class EmailSignInScreen extends StatelessWidget {
   @override

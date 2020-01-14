@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../widgets/custom_flat_button.dart';
+import '../../widgets/custom_flat_button.dart';
 import 'email_sign_in_screen.dart';
 import 'sign_in_model.dart';
 

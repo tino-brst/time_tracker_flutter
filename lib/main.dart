@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'screens/landing_screen.dart';
+import 'features/auth_switch.dart';
 import 'services/auth_service.dart';
 import 'services/firebase_auth_service.dart';
 
@@ -15,7 +15,7 @@ class TimeTracker extends StatelessWidget {
       child: MaterialApp(
         title: 'Time Tracker',
         theme: ThemeData(primarySwatch: Colors.indigo),
-        home: LandingScreen(),
+        home: AuthSwitch(),
       ),
     );
   }
