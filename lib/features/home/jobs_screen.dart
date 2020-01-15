@@ -4,14 +4,14 @@ import 'package:provider/provider.dart';
 import '../../services/auth_service.dart';
 import '../../widgets/platform_alert_dialog.dart';
 
-class HomeScreen extends StatelessWidget {
+class JobsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final authService = Provider.of<AuthService>(context);
+    final authService = Provider.of<AuthService>(context, listen: false);
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home Page'),
+        title: Text('Jobs'),
         elevation: 0,
         actions: <Widget>[
           IconButton(
@@ -19,6 +19,10 @@ class HomeScreen extends StatelessWidget {
             onPressed: () => _signOut(context, authService),
           )
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () {},
       ),
     );
   }
