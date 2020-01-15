@@ -1,12 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:meta/meta.dart';
+import 'package:flutter/foundation.dart';
 
 import '../entities/user.dart';
 
 class UserModel extends User {
-  final String uid;
+  UserModel({@required String uid}) : super(uid: uid);
 
-  UserModel({@required this.uid}) : super();
-
-  UserModel.fromFirebaseUser(FirebaseUser firebaseUser) : uid = firebaseUser.uid;
+  UserModel.fromFirebaseUser(FirebaseUser firebaseUser) : super(uid: firebaseUser.uid);
 }
