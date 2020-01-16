@@ -31,6 +31,15 @@ class FirestoreDatabaseService implements DatabaseService {
       ).toJson(),
     );
   }
+
+  @override
+  Future<bool> checkIsJobNameUnique(String jobName) async {
+    if (await jobs.isEmpty) return true;
+
+    final jobsList = await jobs.first;
+    final jobsNames = jobsList.map((job) => job.name.trim().toLowerCase());
+    return !jobsNames.contains(jobName.trim().toLowerCase());
+  }
 }
 
 class Path {
