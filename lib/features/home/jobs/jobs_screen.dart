@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../entities/job.dart';
-import '../../services/auth_service.dart';
-import '../../services/database_service.dart';
-import '../../widgets/platform_alert_dialog.dart';
+import '../../../entities/job.dart';
+import '../../../services/auth_service.dart';
+import '../../../services/database_service.dart';
+import '../../../widgets/platform_alert_dialog.dart';
+import 'new_job_screen.dart';
 
 class JobsScreen extends StatelessWidget {
   @override
@@ -25,7 +26,13 @@ class JobsScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: () {},
+        onPressed: () async {
+          final newJob = await NewJobScreen.show(context);
+          databaseService.addJob(
+            name: newJob.name,
+            ratePerHour: newJob.ratePerHour,
+          );
+        },
       ),
       body: StreamBuilder<List<Job>>(
         stream: databaseService.jobs,

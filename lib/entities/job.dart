@@ -8,4 +8,9 @@ class Job {
     @required this.name,
     @required this.ratePerHour,
   });
+
+  @override
+  String toString() {
+    return 'name: $name, ratePerHour: $ratePerHour';
+  }
 }
