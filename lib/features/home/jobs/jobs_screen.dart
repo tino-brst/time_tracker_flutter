@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:time_tracker/features/home/jobs/job_list_tile.dart';
+import 'package:time_tracker/features/home/jobs/jobs_list_view.dart';
 
 import '../../../entities/job.dart';
 import '../../../services/auth_service.dart';
@@ -37,15 +39,7 @@ class JobsScreen extends StatelessWidget {
             );
           }
 
-          final jobs = snapshot.data;
-          return ListView.builder(
-            itemCount: jobs.length,
-            itemBuilder: (_, index) {
-              return ListTile(
-                title: Text(jobs[index].name),
-              );
-            },
-          );
+          return JobsListView(jobs: snapshot.data);
         },
       ),
     );
