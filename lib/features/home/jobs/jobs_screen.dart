@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:time_tracker/features/home/jobs/job_list_tile.dart';
-import 'package:time_tracker/features/home/jobs/jobs_list_view.dart';
 
 import '../../../entities/job.dart';
 import '../../../services/auth_service.dart';
 import '../../../services/database_service.dart';
 import '../../../widgets/platform_alert_dialog.dart';
+import 'jobs_list_view.dart';
 import 'new_job_screen.dart';
 
 class JobsScreen extends StatelessWidget {
