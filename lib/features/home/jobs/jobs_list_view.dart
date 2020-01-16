@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../entities/job.dart';
+import 'edit_job_screen.dart';
 import 'job_list_tile.dart';
 
 class JobsListView extends StatelessWidget {
@@ -12,7 +13,14 @@ class JobsListView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.builder(
       itemCount: jobs.length,
-      itemBuilder: (_, index) => JobListTile(jobs[index]),
+      itemBuilder: (_, index) {
+        final job = jobs[index];
+        return JobListTile(job, onTap: () => _editJob(context, job));
+      },
     );
+  }
+
+  void _editJob(BuildContext context, Job job) async {
+    await EditJobScreen.show(context, job);
   }
 }

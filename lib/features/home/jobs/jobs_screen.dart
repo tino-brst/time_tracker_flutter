@@ -5,8 +5,8 @@ import '../../../entities/job.dart';
 import '../../../services/auth_service.dart';
 import '../../../services/database_service.dart';
 import '../../../widgets/platform_alert_dialog.dart';
+import 'edit_job_screen.dart';
 import 'jobs_list_view.dart';
-import 'new_job_screen.dart';
 
 class JobsScreen extends StatelessWidget {
   @override
@@ -56,6 +56,6 @@ class JobsScreen extends StatelessWidget {
   }
 
   void _createNewJob(BuildContext context) async {
-    await NewJobScreen.show(context);
+    await EditJobScreen.show(context);
   }
 }

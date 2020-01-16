@@ -1,30 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../entities/job.dart';
 import '../../../services/database_service.dart';
 import '../../../widgets/platform_alert_dialog.dart';
 
-class NewJobScreen extends StatefulWidget {
+class EditJobScreen extends StatefulWidget {
+  final Job job;
   final DatabaseService _databaseService;
 
-  NewJobScreen(this._databaseService);
+  EditJobScreen(this._databaseService, {this.job});
 
   @override
-  _NewJobScreenState createState() => _NewJobScreenState();
+  _EditJobScreenState createState() => _EditJobScreenState();
 
-  static Future<void> show(BuildContext context) async {
+  static Future<void> show(BuildContext context, [Job job]) async {
     final databaseService = Provider.of<DatabaseService>(context, listen: false);
 
     return Navigator.of(context).push(
       MaterialPageRoute(
         fullscreenDialog: true,
-        builder: (context) => NewJobScreen(databaseService),
+        builder: (context) => EditJobScreen(databaseService, job: job),
       ),
     );
   }
 }
 
-class _NewJobScreenState extends State<NewJobScreen> {
+class _EditJobScreenState extends State<EditJobScreen> {
   final _formKey = GlobalKey<FormState>();
   final _ratePerHourFocusNode = FocusNode();
 
@@ -40,9 +42,13 @@ class _NewJobScreenState extends State<NewJobScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final appBarTitle = widget.job == null ? 'New Job' : 'Edit Job';
+    final initialNameValue = widget.job?.name;
+    final initialRatePerHourValue = widget.job?.ratePerHour?.toString();
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('New Job'),
+        title: Text(appBarTitle),
         actions: <Widget>[
           FlatButton(
             child: Text(
@@ -67,6 +73,7 @@ class _NewJobScreenState extends State<NewJobScreen> {
                 child: Column(
                   children: <Widget>[
                     TextFormField(
+                      initialValue: initialNameValue,
                       enabled: !_isLoading,
                       validator: _nameValidator,
                       autofocus: true,
@@ -77,6 +84,7 @@ class _NewJobScreenState extends State<NewJobScreen> {
                     ),
                     SizedBox(height: 12),
                     TextFormField(
+                      initialValue: initialRatePerHourValue,
                       enabled: !_isLoading,
                       validator: _ratePerHourValidator,
                       focusNode: _ratePerHourFocusNode,
