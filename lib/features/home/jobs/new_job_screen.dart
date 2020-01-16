@@ -30,6 +30,7 @@ class _NewJobScreenState extends State<NewJobScreen> {
 
   String _name;
   int _ratePerHour;
+  bool _isLoading = false;
 
   @override
   void dispose() {
@@ -56,39 +57,57 @@ class _NewJobScreenState extends State<NewJobScreen> {
           )
         ],
       ),
-      body: Form(
-        key: _formKey,
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              children: <Widget>[
-                TextFormField(
-                  validator: _nameValidator,
-                  autofocus: true,
-                  onSaved: (value) => _name = value,
-                  onChanged: (_) => setState(() {}),
-                  decoration: InputDecoration(labelText: 'Name'),
-                  textInputAction: TextInputAction.next,
-                  onEditingComplete: () => _focusOn(_ratePerHourFocusNode),
+      body: Stack(
+        children: <Widget>[
+          Form(
+            key: _formKey,
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  children: <Widget>[
+                    TextFormField(
+                      enabled: !_isLoading,
+                      validator: _nameValidator,
+                      autofocus: true,
+                      onSaved: (value) => _name = value,
+                      decoration: InputDecoration(labelText: 'Name'),
+                      textInputAction: TextInputAction.next,
+                      onEditingComplete: () => _focusOn(_ratePerHourFocusNode),
+                    ),
+                    SizedBox(height: 12),
+                    TextFormField(
+                      enabled: !_isLoading,
+                      validator: _ratePerHourValidator,
+                      focusNode: _ratePerHourFocusNode,
+                      onSaved: (value) => _ratePerHour = int.parse(value),
+                      keyboardType: TextInputType.numberWithOptions(signed: false, decimal: false),
+                      decoration: InputDecoration(labelText: 'Rate per hour'),
+                    ),
+                  ],
                 ),
-                SizedBox(height: 12),
-                TextFormField(
-                  validator: _ratePerHourValidator,
-                  focusNode: _ratePerHourFocusNode,
-                  onSaved: (value) => _ratePerHour = int.parse(value),
-                  keyboardType: TextInputType.numberWithOptions(signed: false, decimal: false),
-                  decoration: InputDecoration(labelText: 'Rate per hour'),
-                ),
-              ],
+              ),
             ),
           ),
-        ),
+          if (_isLoading)
+            Container(
+              color: Colors.black12,
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
+            ),
+        ],
       ),
     );
   }
 
-  Future<void> _save() async {
+  void _set({@required bool isLoading}) {
+    setState(() {
+      _isLoading = isLoading;
+    });
+  }
+
+  void _save() async {
     final form = _formKey.currentState;
     final isFormValid = form.validate();
 
@@ -103,6 +122,7 @@ class _NewJobScreenState extends State<NewJobScreen> {
           primaryActionText: 'OK',
         ).show(context);
       } else {
+        _set(isLoading: true);
         await widget._databaseService.addJob(name: _name, ratePerHour: _ratePerHour);
         Navigator.of(context).pop();
       }
