@@ -1,16 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-import '../../../entities/job.dart';
+import '../../../services/database_service.dart';
+import '../../../widgets/platform_alert_dialog.dart';
 
 class NewJobScreen extends StatefulWidget {
+  final DatabaseService _databaseService;
+
+  NewJobScreen(this._databaseService);
+
   @override
   _NewJobScreenState createState() => _NewJobScreenState();
 
-  static Future<Job> show(BuildContext context) async {
+  static Future<void> show(BuildContext context) async {
+    final databaseService = Provider.of<DatabaseService>(context, listen: false);
+
     return Navigator.of(context).push(
       MaterialPageRoute(
         fullscreenDialog: true,
-        builder: (context) => NewJobScreen(),
+        builder: (context) => NewJobScreen(databaseService),
       ),
     );
   }
@@ -80,18 +88,24 @@ class _NewJobScreenState extends State<NewJobScreen> {
     );
   }
 
-  void _save() {
+  Future<void> _save() async {
     final form = _formKey.currentState;
     final isFormValid = form.validate();
 
     if (isFormValid) {
       form.save();
-      Navigator.of(context).pop<Job>(
-        Job(
-          name: _name,
-          ratePerHour: _ratePerHour,
-        ),
-      );
+      final isJobNameUnique = await widget._databaseService.checkIsJobNameUnique(_name);
+
+      if (!isJobNameUnique) {
+        await PlatformAlertDialog(
+          title: 'Name Already Taken',
+          content: 'Please choose a different name',
+          primaryActionText: 'OK',
+        ).show(context);
+      } else {
+        await widget._databaseService.addJob(name: _name, ratePerHour: _ratePerHour);
+        Navigator.of(context).pop();
+      }
     }
   }
 

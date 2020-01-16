@@ -26,7 +26,7 @@ class JobsScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: () => _createNewJob(context, databaseService),
+        onPressed: () => _createNewJob(context),
       ),
       body: StreamBuilder<List<Job>>(
         stream: databaseService.jobs,
@@ -62,11 +62,7 @@ class JobsScreen extends StatelessWidget {
     if (didConfirmSignOut) authService.signOut();
   }
 
-  void _createNewJob(BuildContext context, DatabaseService databaseService) async {
-    final newJob = await NewJobScreen.show(context);
-    databaseService.addJob(
-      name: newJob.name,
-      ratePerHour: newJob.ratePerHour,
-    );
+  void _createNewJob(BuildContext context) async {
+    await NewJobScreen.show(context);
   }
 }
