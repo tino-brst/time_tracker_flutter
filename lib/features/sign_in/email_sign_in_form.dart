@@ -66,8 +66,6 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
     );
   }
 
-  // TODO investigate TextFields vs FormTextFields
-
   Widget _buildEmailTextField() {
     final showErrorMessage = _areErrorMessagesEnabled && !widget.emailValidator.isValid(_email);
     return TextField(

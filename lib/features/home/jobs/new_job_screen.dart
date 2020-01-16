@@ -18,8 +18,16 @@ class NewJobScreen extends StatefulWidget {
 
 class _NewJobScreenState extends State<NewJobScreen> {
   final _formKey = GlobalKey<FormState>();
+  final _ratePerHourFocusNode = FocusNode();
+
   String _name;
   int _ratePerHour;
+
+  @override
+  void dispose() {
+    super.dispose();
+    _ratePerHourFocusNode.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,13 +57,17 @@ class _NewJobScreenState extends State<NewJobScreen> {
               children: <Widget>[
                 TextFormField(
                   validator: _nameValidator,
+                  autofocus: true,
                   onSaved: (value) => _name = value,
                   onChanged: (_) => setState(() {}),
                   decoration: InputDecoration(labelText: 'Name'),
+                  textInputAction: TextInputAction.next,
+                  onEditingComplete: () => _focusOn(_ratePerHourFocusNode),
                 ),
                 SizedBox(height: 12),
                 TextFormField(
                   validator: _ratePerHourValidator,
+                  focusNode: _ratePerHourFocusNode,
                   onSaved: (value) => _ratePerHour = int.parse(value),
                   keyboardType: TextInputType.numberWithOptions(signed: false, decimal: false),
                   decoration: InputDecoration(labelText: 'Rate per hour'),
@@ -81,6 +93,10 @@ class _NewJobScreenState extends State<NewJobScreen> {
         ),
       );
     }
+  }
+
+  void _focusOn(FocusNode nextField) {
+    FocusScope.of(context).requestFocus(nextField);
   }
 
   String _nameValidator(String name) {
