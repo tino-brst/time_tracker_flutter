@@ -26,7 +26,7 @@ class AuthSwitch extends StatelessWidget {
             );
           } else {
             return Provider<DatabaseService>(
-              create: (_) => FirestoreDatabaseService(userUid: user.uid),
+              create: (_) => FirestoreDatabaseService(userId: user.id),
               child: JobsScreen(),
             );
           }

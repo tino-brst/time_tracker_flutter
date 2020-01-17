@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import '../entities/user.dart';
 
 class UserModel extends User {
-  UserModel({@required String uid}) : super(uid: uid);
+  UserModel({@required String id}) : super(id: id);
 
-  UserModel.fromFirebaseUser(FirebaseUser firebaseUser) : super(uid: firebaseUser.uid);
+  UserModel.fromFirebaseUser(FirebaseUser firebaseUser) : super(id: firebaseUser.uid);
 }

@@ -7,28 +7,34 @@ import 'database_service.dart';
 
 class FirestoreDatabaseService implements DatabaseService {
   final _firestore = Firestore.instance;
-  final String _userUid;
+  final String _userId;
 
-  FirestoreDatabaseService({@required userUid}) : _userUid = userUid;
+  FirestoreDatabaseService({@required userId}) : _userId = userId;
 
   @override
   Stream<List<Job>> get jobs {
-    final jobsCollection = _firestore.collection(Path.userJobs(_userUid));
+    final jobsCollection = _firestore.collection(Path.userJobs(_userId));
     return jobsCollection.snapshots().map((snapshot) {
       return snapshot.documents.map((document) {
-        return JobModel.fromJson(document.data);
+        return JobModel.fromJsonWithId(document.data, document.documentID);
       }).toList();
     });
   }
 
   @override
   Future<void> addJob({@required String name, @required int ratePerHour}) async {
-    final jobsCollection = _firestore.collection(Path.userJobs(_userUid));
-    await jobsCollection.add(
-      JobModel(
-        name: name,
-        ratePerHour: ratePerHour,
-      ).toJson(),
+    await _setJob(
+      name: name,
+      ratePerHour: ratePerHour,
+    );
+  }
+
+  @override
+  Future<void> updateJob({@required String id, @required String name, @required int ratePerHour}) async {
+    await _setJob(
+      id: id,
+      name: name,
+      ratePerHour: ratePerHour,
     );
   }
 
@@ -40,6 +46,24 @@ class FirestoreDatabaseService implements DatabaseService {
     final jobsNames = jobsList.map((job) => job.name.trim().toLowerCase());
     return !jobsNames.contains(jobName.trim().toLowerCase());
   }
+
+  String _generateDocumentIdFromCurrentDate() {
+    return DateTime.now().toIso8601String();
+  }
+
+  Future<void> _setJob({String id, @required String name, @required int ratePerHour}) async {
+    final jobsCollection = _firestore.collection(Path.userJobs(_userId));
+    final jobId = id ?? _generateDocumentIdFromCurrentDate();
+    final jobDocument = jobsCollection.document(jobId);
+
+    await jobDocument.setData(
+      JobModel(
+        id: jobId,
+        name: name,
+        ratePerHour: ratePerHour,
+      ).toJsonWithoutId(),
+    );
+  }
 }
 
 class Path {
@@ -47,5 +71,5 @@ class Path {
   static const _users = 'users';
 
   static String get users => '$_users';
-  static String userJobs(String userUid) => '$_users/$userUid/$_jobs';
+  static String userJobs(String userId) => '$_users/$userId/$_jobs';
 }

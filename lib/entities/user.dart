@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 
 class User {
-  final String uid;
+  final String id;
 
-  User({@required this.uid});
+  User({@required this.id});
 }

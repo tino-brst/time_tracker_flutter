@@ -121,18 +121,36 @@ class _EditJobScreenState extends State<EditJobScreen> {
 
     if (isFormValid) {
       form.save();
-      final isJobNameUnique = await widget._databaseService.checkIsJobNameUnique(_name);
+      // TODO could be done as part of the addJob database service method, which could throw an exception
+      final databaseService = widget._databaseService;
+      final job = widget.job;
+      final isJobNameTaken = !await databaseService.checkIsJobNameUnique(_name);
+      final isEditingExistingJob = job != null;
 
-      if (!isJobNameUnique) {
-        await PlatformAlertDialog(
-          title: 'Name Already Taken',
-          content: 'Please choose a different name',
-          primaryActionText: 'OK',
-        ).show(context);
-      } else {
+      if (isEditingExistingJob) {
         _set(isLoading: true);
-        await widget._databaseService.addJob(name: _name, ratePerHour: _ratePerHour);
+        print(job);
+        await databaseService.updateJob(
+          id: job.id,
+          name: _name,
+          ratePerHour: _ratePerHour,
+        );
         Navigator.of(context).pop();
+      } else {
+        if (isJobNameTaken) {
+          await PlatformAlertDialog(
+            title: 'Name Already Taken',
+            content: 'Please choose a different name',
+            primaryActionText: 'OK',
+          ).show(context);
+        } else {
+          _set(isLoading: true);
+          await widget._databaseService.addJob(
+            name: _name,
+            ratePerHour: _ratePerHour,
+          );
+          Navigator.of(context).pop();
+        }
       }
     }
   }
