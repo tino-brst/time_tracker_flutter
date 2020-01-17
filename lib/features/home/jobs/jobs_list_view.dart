@@ -11,8 +11,9 @@ class JobsListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
+    return ListView.separated(
       itemCount: jobs.length,
+      separatorBuilder: (_, __) => Divider(height: 0.5),
       itemBuilder: (_, index) {
         final job = jobs[index];
         return JobListTile(job, onTap: () => _editJob(context, job));

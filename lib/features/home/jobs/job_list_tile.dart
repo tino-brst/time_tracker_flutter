@@ -11,9 +11,10 @@ class JobListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      contentPadding: EdgeInsets.only(left: 16, right: 10),
       title: Text(job.name),
-      subtitle: Text(job.id),
       onTap: onTap,
+      trailing: Icon(Icons.chevron_right),
     );
   }
 }
