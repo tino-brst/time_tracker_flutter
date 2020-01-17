@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../../../entities/job.dart';
 import '../../../services/auth_service.dart';
 import '../../../services/database_service.dart';
+import '../../../widgets/empty_list_state.dart';
 import '../../../widgets/platform_alert_dialog.dart';
 import 'edit_job_screen.dart';
 import 'jobs_list_view.dart';
@@ -35,6 +36,15 @@ class JobsScreen extends StatelessWidget {
           if (!snapshot.hasData) {
             return Center(
               child: CircularProgressIndicator(),
+            );
+          }
+
+          final jobs = snapshot.data;
+
+          if (jobs.isEmpty) {
+            return EmptyListState(
+              title: 'No jobs yet',
+              subtitle: 'You can create a new one tapping the + button',
             );
           }
 

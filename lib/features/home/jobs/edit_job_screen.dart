@@ -129,7 +129,6 @@ class _EditJobScreenState extends State<EditJobScreen> {
 
       if (isEditingExistingJob) {
         _set(isLoading: true);
-        print(job);
         await databaseService.updateJob(
           id: job.id,
           name: _name,
