@@ -22,7 +22,7 @@ class DismissibleListTile extends StatelessWidget {
       key: key,
       direction: DismissDirection.endToStart,
       background: Container(color: Colors.red),
-      onDismissed: (_) => onDismissed,
+      onDismissed: (_) => onDismissed(),
       child: ListTile(
         title: titleWidget,
         onTap: onTap,
