@@ -25,7 +25,7 @@ class JobsScreen extends StatelessWidget {
     ];
 
     final emptyListTitle = 'No jobs yet';
-    final emptyListSubtitle = 'You can create a new one tapping the + button';
+    final emptyListSubtitle = 'You can create a new one \ntapping the + button';
     final emptyListBody = EmptyListState(title: emptyListTitle, subtitle: emptyListSubtitle);
 
     final loadingListBody = Center(child: CircularProgressIndicator());

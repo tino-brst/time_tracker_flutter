@@ -20,11 +20,13 @@ class EmptyListState extends StatelessWidget {
           Text(
             title,
             style: TextStyle(fontSize: 32, color: Colors.black54),
+            textAlign: TextAlign.center,
           ),
           SizedBox(height: 12),
           Text(
             subtitle,
-            style: TextStyle(fontSize: 15, color: Colors.black45),
+            style: TextStyle(fontSize: 18, color: Colors.black45),
+            textAlign: TextAlign.center,
           ),
         ],
       ),
