@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class EmptyListState extends StatelessWidget {
+class EmptyState extends StatelessWidget {
   final String title;
   final String subtitle;
 
-  const EmptyListState({
+  const EmptyState({
     @required this.title,
     @required this.subtitle,
   })  : assert(title != null),

@@ -6,7 +6,7 @@ import '../../../services/auth_service.dart';
 import '../../../services/database_service.dart';
 import '../../../widgets/custom_list_view.dart';
 import '../../../widgets/dismissible_list_tile.dart';
-import '../../../widgets/empty_list_state.dart';
+import '../../../widgets/empty_state.dart';
 import '../../../widgets/platform_alert_dialog.dart';
 import 'edit_job_screen.dart';
 
@@ -26,7 +26,7 @@ class JobsScreen extends StatelessWidget {
 
     final emptyListTitle = 'No jobs yet';
     final emptyListSubtitle = 'You can create a new one \ntapping the + button';
-    final emptyListBody = EmptyListState(title: emptyListTitle, subtitle: emptyListSubtitle);
+    final emptyListBody = EmptyState(title: emptyListTitle, subtitle: emptyListSubtitle);
 
     final loadingListBody = Center(child: CircularProgressIndicator());
 
