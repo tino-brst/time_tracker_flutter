@@ -4,10 +4,10 @@ import 'package:provider/provider.dart';
 import '../../../entities/job.dart';
 import '../../../services/auth_service.dart';
 import '../../../services/database_service.dart';
+import '../../../widgets/custom_list_view.dart';
 import '../../../widgets/empty_list_state.dart';
 import '../../../widgets/platform_alert_dialog.dart';
 import 'edit_job_screen.dart';
-import 'jobs_list_view.dart';
 
 class JobsScreen extends StatelessWidget {
   @override
@@ -48,7 +48,23 @@ class JobsScreen extends StatelessWidget {
             );
           }
 
-          return JobsListView(jobs: snapshot.data);
+          return CustomListView<Job>(
+            items: jobs,
+            itemBuilder: (context, job) {
+              return Dismissible(
+                key: Key(job.id),
+                direction: DismissDirection.endToStart,
+                background: Container(color: Colors.red),
+                onDismissed: (_) => _deleteJob(databaseService, job),
+                child: ListTile(
+                  title: Text(job.name),
+                  onTap: () => _editJob(context, job),
+                  contentPadding: EdgeInsets.only(left: 16, right: 10),
+                  trailing: Icon(Icons.chevron_right),
+                ),
+              );
+            },
+          );
         },
       ),
     );
@@ -67,5 +83,13 @@ class JobsScreen extends StatelessWidget {
 
   void _createNewJob(BuildContext context) async {
     await EditJobScreen.show(context);
+  }
+
+  void _editJob(BuildContext context, Job job) async {
+    await EditJobScreen.show(context, job);
+  }
+
+  void _deleteJob(DatabaseService databaseService, Job job) {
+    databaseService.deleteJob(id: job.id);
   }
 }
