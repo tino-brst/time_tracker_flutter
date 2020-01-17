@@ -8,13 +8,15 @@ import 'database_service.dart';
 class FirestoreDatabaseService implements DatabaseService {
   final _firestore = Firestore.instance;
   final String _userId;
+  CollectionReference _jobsCollection;
 
-  FirestoreDatabaseService({@required userId}) : _userId = userId;
+  FirestoreDatabaseService({@required userId}) : _userId = userId {
+    _jobsCollection = _firestore.collection(Path.userJobs(_userId));
+  }
 
   @override
   Stream<List<Job>> get jobs {
-    final jobsCollection = _firestore.collection(Path.userJobs(_userId));
-    return jobsCollection.snapshots().map((snapshot) {
+    return _jobsCollection.snapshots().map((snapshot) {
       return snapshot.documents.map((document) {
         return JobModel.fromJsonWithId(document.data, document.documentID);
       }).toList();
@@ -39,6 +41,11 @@ class FirestoreDatabaseService implements DatabaseService {
   }
 
   @override
+  Future<void> deleteJob({@required String id}) async {
+    await _jobsCollection.document(id).delete();
+  }
+
+  @override
   Future<bool> checkIsJobNameUnique(String jobName) async {
     if (await jobs.isEmpty) return true;
 
@@ -52,9 +59,8 @@ class FirestoreDatabaseService implements DatabaseService {
   }
 
   Future<void> _setJob({String id, @required String name, @required int ratePerHour}) async {
-    final jobsCollection = _firestore.collection(Path.userJobs(_userId));
     final jobId = id ?? _generateDocumentIdFromCurrentDate();
-    final jobDocument = jobsCollection.document(jobId);
+    final jobDocument = _jobsCollection.document(jobId);
 
     await jobDocument.setData(
       JobModel(
