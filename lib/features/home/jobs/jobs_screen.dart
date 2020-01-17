@@ -5,6 +5,7 @@ import '../../../entities/job.dart';
 import '../../../services/auth_service.dart';
 import '../../../services/database_service.dart';
 import '../../../widgets/custom_list_view.dart';
+import '../../../widgets/dismissible_list_tile.dart';
 import '../../../widgets/empty_list_state.dart';
 import '../../../widgets/platform_alert_dialog.dart';
 import 'edit_job_screen.dart';
@@ -15,16 +16,25 @@ class JobsScreen extends StatelessWidget {
     final authService = Provider.of<AuthService>(context, listen: false);
     final databaseService = Provider.of<DatabaseService>(context, listen: false);
 
+    final appBarTitle = 'Jobs';
+    final appBarActions = <Widget>[
+      IconButton(
+        icon: Icon(Icons.exit_to_app, color: Colors.white),
+        onPressed: () => _signOut(context, authService),
+      )
+    ];
+
+    final emptyListTitle = 'No jobs yet';
+    final emptyListSubtitle = 'You can create a new one tapping the + button';
+    final emptyListBody = EmptyListState(title: emptyListTitle, subtitle: emptyListSubtitle);
+
+    final loadingListBody = Center(child: CircularProgressIndicator());
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('Jobs'),
+        title: Text(appBarTitle),
         elevation: 0,
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.exit_to_app, color: Colors.white),
-            onPressed: () => _signOut(context, authService),
-          )
-        ],
+        actions: appBarActions,
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
@@ -33,35 +43,19 @@ class JobsScreen extends StatelessWidget {
       body: StreamBuilder<List<Job>>(
         stream: databaseService.jobs,
         builder: (_, snapshot) {
-          if (!snapshot.hasData) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
+          if (!snapshot.hasData) return loadingListBody;
 
           final jobs = snapshot.data;
-
-          if (jobs.isEmpty) {
-            return EmptyListState(
-              title: 'No jobs yet',
-              subtitle: 'You can create a new one tapping the + button',
-            );
-          }
+          if (jobs.isEmpty) return emptyListBody;
 
           return CustomListView<Job>(
             items: jobs,
             itemBuilder: (context, job) {
-              return Dismissible(
+              return DismissibleListTile(
+                title: job.name,
                 key: Key(job.id),
-                direction: DismissDirection.endToStart,
-                background: Container(color: Colors.red),
-                onDismissed: (_) => _deleteJob(databaseService, job),
-                child: ListTile(
-                  title: Text(job.name),
-                  onTap: () => _editJob(context, job),
-                  contentPadding: EdgeInsets.only(left: 16, right: 10),
-                  trailing: Icon(Icons.chevron_right),
-                ),
+                onDismissed: () => _deleteJob(databaseService, job),
+                onTap: () => _editJob(context, job),
               );
             },
           );
