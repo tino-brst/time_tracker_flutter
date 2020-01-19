@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 
+import '../entities/entry.dart';
 import '../entities/job.dart';
+import '../models/entry_model.dart';
 import '../models/job_model.dart';
 import 'database_service.dart';
 
@@ -9,16 +11,27 @@ class FirestoreDatabaseService implements DatabaseService {
   final _firestore = Firestore.instance;
   final String _userId;
   CollectionReference _jobsCollection;
+  CollectionReference _entriesCollection;
 
   FirestoreDatabaseService({@required userId}) : _userId = userId {
-    _jobsCollection = _firestore.collection(Path.userJobs(_userId));
+    _jobsCollection = _firestore.collection(Path.jobs(_userId));
+    _entriesCollection = _firestore.collection(Path.entries(_userId));
   }
 
   @override
-  Stream<List<Job>> get jobs {
+  Stream<List<Job>> getJobsStream() {
     return _jobsCollection.snapshots().map((snapshot) {
       return snapshot.documents.map((document) {
-        return JobModel.fromJsonWithId(document.data, document.documentID);
+        return JobModel.fromDocument(document);
+      }).toList();
+    });
+  }
+
+  @override
+  Stream<List<Entry>> getEntriesStream(String jobId) {
+    return _entriesCollection.where('jobId', isEqualTo: jobId).snapshots().map((snapshot) {
+      return snapshot.documents.map((document) {
+        return EntryModel.fromDocument(document);
       }).toList();
     });
   }
@@ -42,16 +55,52 @@ class FirestoreDatabaseService implements DatabaseService {
 
   @override
   Future<void> deleteJob({@required String id}) async {
+    // TODO delete related entries
     await _jobsCollection.document(id).delete();
   }
 
   @override
   Future<bool> checkIsJobNameUnique(String jobName) async {
-    if (await jobs.isEmpty) return true;
+    final jobsList = await getJobsStream().first;
+    if (jobsList.isEmpty) return true;
 
-    final jobsList = await jobs.first;
     final jobsNames = jobsList.map((job) => job.name.trim().toLowerCase());
     return !jobsNames.contains(jobName.trim().toLowerCase());
+  }
+
+  @override
+  Future<void> addEntry({
+    @required String jobId,
+    @required DateTime startTime,
+    @required DateTime endTime,
+    String comment,
+  }) {
+    return _setEntry(
+      jobId: jobId,
+      startTime: startTime,
+      endTime: endTime,
+    );
+  }
+
+  @override
+  Future<void> updateEntry({
+    @required String entryId,
+    @required String jobId,
+    @required DateTime startTime,
+    @required DateTime endTime,
+    @required String comment,
+  }) {
+    return _setEntry(
+      id: entryId,
+      jobId: jobId,
+      startTime: startTime,
+      endTime: endTime,
+    );
+  }
+
+  @override
+  Future<void> deleteEntry(String id) async {
+    await _entriesCollection.document(id).delete();
   }
 
   String _generateDocumentIdFromCurrentDate() {
@@ -67,15 +116,36 @@ class FirestoreDatabaseService implements DatabaseService {
         id: jobId,
         name: name,
         ratePerHour: ratePerHour,
-      ).toJsonWithoutId(),
+      ).toDocumentData(),
+    );
+  }
+
+  Future<void> _setEntry({
+    String id,
+    @required String jobId,
+    @required DateTime startTime,
+    @required DateTime endTime,
+    String comment,
+  }) {
+    final entryId = id ?? _generateDocumentIdFromCurrentDate();
+    final entryDocument = _entriesCollection.document(entryId);
+    return entryDocument.setData(
+      EntryModel(
+        id: entryId,
+        jobId: jobId,
+        startTime: startTime,
+        endTime: endTime,
+        comment: comment,
+      ).toDocumentData(),
     );
   }
 }
 
 class Path {
-  static const _jobs = 'jobs';
   static const _users = 'users';
+  static const _jobs = 'jobs';
+  static const _entries = 'entries';
 
-  static String users() => '$_users';
-  static String userJobs(String userId) => '$_users/$userId/$_jobs';
+  static String jobs(String userId) => '$_users/$userId/$_jobs';
+  static String entries(String userId) => '$_users/$userId/$_entries';
 }
