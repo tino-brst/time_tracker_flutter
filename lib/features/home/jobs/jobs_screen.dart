@@ -9,6 +9,7 @@ import '../../../widgets/dismissible_list_tile.dart';
 import '../../../widgets/empty_state.dart';
 import '../../../widgets/platform_alert_dialog.dart';
 import 'edit_job_screen.dart';
+import 'job_entries_screen.dart';
 
 class JobsScreen extends StatelessWidget {
   @override
@@ -38,7 +39,7 @@ class JobsScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: () => _createNewJob(context),
+        onPressed: () => _createNewJob(context, databaseService),
       ),
       body: StreamBuilder<List<Job>>(
         stream: databaseService.jobs,
@@ -55,7 +56,7 @@ class JobsScreen extends StatelessWidget {
                 title: job.name,
                 key: Key(job.id),
                 onDismissed: () => _deleteJob(databaseService, job),
-                onTap: () => _editJob(context, job),
+                onTap: () => _goToJobEntries(context, job),
               );
             },
           );
@@ -75,12 +76,12 @@ class JobsScreen extends StatelessWidget {
     if (didConfirmSignOut) authService.signOut();
   }
 
-  void _createNewJob(BuildContext context) async {
-    await EditJobScreen.show(context);
+  void _createNewJob(BuildContext context, databaseService) async {
+    await EditJobScreen.show(context, databaseService);
   }
 
-  void _editJob(BuildContext context, Job job) async {
-    await EditJobScreen.show(context, job);
+  void _goToJobEntries(BuildContext context, Job job) async {
+    await JobEntriesScreen.show(context, job);
   }
 
   void _deleteJob(DatabaseService databaseService, Job job) {

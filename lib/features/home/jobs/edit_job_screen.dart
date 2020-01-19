@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../../../entities/job.dart';
 import '../../../services/database_service.dart';
@@ -14,13 +13,11 @@ class EditJobScreen extends StatefulWidget {
   @override
   _EditJobScreenState createState() => _EditJobScreenState();
 
-  static Future<void> show(BuildContext context, [Job job]) async {
-    final databaseService = Provider.of<DatabaseService>(context, listen: false);
-
+  static Future<void> show(BuildContext context, DatabaseService databaseService, [Job job]) {
     return Navigator.of(context).push(
       MaterialPageRoute(
         fullscreenDialog: true,
-        builder: (context) => EditJobScreen(databaseService, job: job),
+        builder: (_) => EditJobScreen(databaseService, job: job),
       ),
     );
   }
@@ -42,13 +39,16 @@ class _EditJobScreenState extends State<EditJobScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final appBarTitle = widget.job == null ? 'New Job' : 'Edit Job';
+    final isNewJob = widget.job == null;
+    final appBarTitle = isNewJob ? 'New Job' : 'Edit Job';
+    final isFirstFieldAutofocusEnabled = isNewJob ? true : false;
     final initialNameValue = widget.job?.name;
     final initialRatePerHourValue = widget.job?.ratePerHour?.toString();
 
     return Scaffold(
       appBar: AppBar(
         title: Text(appBarTitle),
+        elevation: 0,
         actions: <Widget>[
           FlatButton(
             child: Text(
@@ -76,7 +76,7 @@ class _EditJobScreenState extends State<EditJobScreen> {
                       initialValue: initialNameValue,
                       enabled: !_isLoading,
                       validator: _nameValidator,
-                      autofocus: true,
+                      autofocus: isFirstFieldAutofocusEnabled,
                       onSaved: (value) => _name = value,
                       decoration: InputDecoration(labelText: 'Name'),
                       textInputAction: TextInputAction.next,
