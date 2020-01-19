@@ -55,7 +55,12 @@ class FirestoreDatabaseService implements DatabaseService {
 
   @override
   Future<void> deleteJob({@required String id}) async {
-    // TODO delete related entries
+    // Delete job entries
+    final jobEntries = await getEntriesStream(id).first;
+    for (final entry in jobEntries) {
+      _entriesCollection.document(entry.id).delete();
+    }
+    // Delete job itself
     await _jobsCollection.document(id).delete();
   }
 
