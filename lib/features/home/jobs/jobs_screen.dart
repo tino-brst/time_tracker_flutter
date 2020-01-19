@@ -42,7 +42,7 @@ class JobsScreen extends StatelessWidget {
         onPressed: () => _createNewJob(context, databaseService),
       ),
       body: StreamBuilder<List<Job>>(
-        stream: databaseService.jobs,
+        stream: databaseService.getJobsStream(),
         builder: (_, snapshot) {
           if (!snapshot.hasData) return loadingListBody;
 
