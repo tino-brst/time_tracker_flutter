@@ -76,6 +76,6 @@ class Path {
   static const _jobs = 'jobs';
   static const _users = 'users';
 
-  static String get users => '$_users';
+  static String users() => '$_users';
   static String userJobs(String userId) => '$_users/$userId/$_jobs';
 }
