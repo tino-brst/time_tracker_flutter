@@ -4,9 +4,9 @@ import 'package:provider/provider.dart';
 import '../../../entities/job.dart';
 import '../../../services/auth_service.dart';
 import '../../../services/database_service.dart';
-import '../../../widgets/custom_list_view.dart';
 import '../../../widgets/dismissible_list_tile.dart';
 import '../../../widgets/empty_state.dart';
+import '../../../widgets/generic_list_view.dart';
 import '../../../widgets/platform_alert_dialog.dart';
 import 'edit_job_screen.dart';
 import 'job_entries_screen.dart';
@@ -49,7 +49,7 @@ class JobsScreen extends StatelessWidget {
           final jobs = snapshot.data;
           if (jobs.isEmpty) return emptyListBody;
 
-          return CustomListView<Job>(
+          return GenericListView<Job>(
             items: jobs,
             itemBuilder: (context, job) {
               return DismissibleListTile(

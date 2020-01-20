@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class CustomListView<T> extends StatelessWidget {
+class GenericListView<T> extends StatelessWidget {
   final List<T> items;
   final Widget Function(BuildContext, T) itemBuilder;
 
-  CustomListView({
+  GenericListView({
     @required this.items,
     @required this.itemBuilder,
   });
