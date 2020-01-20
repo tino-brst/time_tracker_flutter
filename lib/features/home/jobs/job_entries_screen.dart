@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -80,7 +82,7 @@ class JobEntriesScreen extends StatelessWidget {
     databaseService.addEntry(
       jobId: job.id,
       startTime: DateTime.now(),
-      endTime: DateTime.now(),
+      endTime: DateTime.now().add(Duration(hours: Random().nextInt(20))),
       comment: 'Super cool comment',
     );
   }
