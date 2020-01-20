@@ -11,13 +11,15 @@ class JobEntryListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final trailingChevronIcon = Icon(Icons.chevron_right, color: Colors.black38);
     final dayOfTheWeek = DateFormat(DateFormat.WEEKDAY).format(entry.startTime);
     final date = DateFormat(DateFormat.YEAR_ABBR_MONTH_DAY).format(entry.startTime);
     final startTime = DateFormat(DateFormat.HOUR24_MINUTE).format(entry.startTime);
     final endTime = DateFormat(DateFormat.HOUR24_MINUTE).format(entry.endTime);
     final duration = '${entry.duration.inHours.toString()}h';
     final income = job.ratePerHour * entry.duration.inHours;
+    final formattedIncome = NumberFormat.compactCurrency(decimalDigits: 0, symbol: '\$').format(income);
+
+    final chevronIcon = Icon(Icons.chevron_right, color: Colors.black38);
 
     return Padding(
       padding: EdgeInsets.fromLTRB(16, 14, 10, 14),
@@ -44,7 +46,7 @@ class JobEntryListItem extends StatelessWidget {
             ),
           ),
           Container(
-            child: Text('\$ $income', style: TextStyle(color: Colors.white)),
+            child: Text(formattedIncome, style: TextStyle(color: Colors.white)),
             padding: EdgeInsets.symmetric(vertical: 2, horizontal: 4),
             decoration: ShapeDecoration(
               color: Colors.green.shade500,
@@ -52,7 +54,7 @@ class JobEntryListItem extends StatelessWidget {
             ),
           ),
           SizedBox(width: 4),
-          trailingChevronIcon,
+          chevronIcon,
         ],
       ),
     );

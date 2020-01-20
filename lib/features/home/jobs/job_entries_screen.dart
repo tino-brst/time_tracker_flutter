@@ -83,7 +83,7 @@ class JobEntriesScreen extends StatelessWidget {
       jobId: job.id,
       startTime: DateTime.now(),
       endTime: DateTime.now().add(Duration(hours: Random().nextInt(20))),
-      comment: 'Super cool comment',
+      comment: 'Lorem ipsum dolor sit amet',
     );
   }
 
