@@ -5,7 +5,7 @@ import '../entities/user.dart';
 import '../services/auth_service.dart';
 import '../services/database_service.dart';
 import '../services/firestore_database_service.dart';
-import 'home/jobs/jobs_screen.dart';
+import 'home/home_screen.dart';
 import 'sign_in/sign_in_model.dart';
 import 'sign_in/sign_in_screen.dart';
 
@@ -27,7 +27,7 @@ class AuthSwitch extends StatelessWidget {
           } else {
             return Provider<DatabaseService>(
               create: (_) => FirestoreDatabaseService(userId: user.id),
-              child: JobsScreen(),
+              child: HomeScreen(),
             );
           }
         } else {
