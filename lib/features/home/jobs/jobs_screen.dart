@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -18,12 +20,14 @@ class JobsScreen extends StatelessWidget {
     final databaseService = Provider.of<DatabaseService>(context, listen: false);
 
     final appBarTitle = 'Jobs';
-    final appBarActions = <Widget>[
-      IconButton(
-        icon: Icon(Icons.exit_to_app, color: Colors.white),
-        onPressed: () => _signOut(context, authService),
-      )
-    ];
+    final signOutButton = IconButton(
+      icon: Icon(Icons.exit_to_app, color: Colors.white),
+      onPressed: () => _signOut(context, authService),
+    );
+    final newJobButton = IconButton(
+      icon: Icon(Icons.add, color: Colors.white),
+      onPressed: () => _createNewJob(context, databaseService),
+    );
 
     final emptyListTitle = 'No jobs yet';
     final emptyListSubtitle = 'You can create a new one \ntapping the + button';
@@ -34,12 +38,12 @@ class JobsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(appBarTitle),
+        centerTitle: Platform.isIOS,
         elevation: 0,
-        actions: appBarActions,
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () => _createNewJob(context, databaseService),
+        actions: [
+          signOutButton,
+          newJobButton,
+        ],
       ),
       body: StreamBuilder<List<Job>>(
         stream: databaseService.getJobsStream(),

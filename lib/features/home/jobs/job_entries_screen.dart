@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -31,9 +32,13 @@ class JobEntriesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final editButton = FlatButton(
-      child: Text('Edit', style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.normal)),
+    final editButton = IconButton(
+      icon: Icon(Icons.edit),
       onPressed: () => _editJob(context, job),
+    );
+    final addEntryButton = IconButton(
+      icon: Icon(Icons.add),
+      onPressed: _newEntry,
     );
 
     final emptyListTitle = 'No entries yet';
@@ -47,7 +52,11 @@ class JobEntriesScreen extends StatelessWidget {
         // TODO the title should update after editing the job name
         title: Text(job.name),
         elevation: 0,
-        actions: <Widget>[editButton],
+        centerTitle: Platform.isIOS,
+        actions: <Widget>[
+          editButton,
+          addEntryButton,
+        ],
       ),
       body: StreamBuilder<List<Entry>>(
         stream: databaseService.getEntriesStream(job.id),
@@ -63,16 +72,11 @@ class JobEntriesScreen extends StatelessWidget {
               return DismissibleInkWell(
                 key: Key(entry.id),
                 onDismissed: () => _deleteEntry(databaseService, entry.id),
-                onTap: () {},
                 child: JobEntryListItem(job, entry),
               );
             },
           );
         },
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: _newEntry,
       ),
     );
   }
