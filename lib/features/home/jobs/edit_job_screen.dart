@@ -14,7 +14,7 @@ class EditJobScreen extends StatefulWidget {
   _EditJobScreenState createState() => _EditJobScreenState();
 
   static Future<void> show(BuildContext context, DatabaseService databaseService, [Job job]) {
-    return Navigator.of(context).push(
+    return Navigator.of(context, rootNavigator: true).push(
       MaterialPageRoute(
         fullscreenDialog: true,
         builder: (_) => EditJobScreen(databaseService, job: job),
