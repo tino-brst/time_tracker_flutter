@@ -13,6 +13,7 @@ class TabData {
         assert(builder != null);
 }
 
+// TODO make it a statefull widget that keeps track of the current tab internally?
 class TabScaffold extends StatelessWidget {
   final List<TabData> tabs;
   final void Function(int) onTabChange;

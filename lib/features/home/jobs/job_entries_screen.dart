@@ -44,6 +44,7 @@ class JobEntriesScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
+        // TODO the title should update after editing the job name
         title: Text(job.name),
         elevation: 0,
         actions: <Widget>[editButton],
