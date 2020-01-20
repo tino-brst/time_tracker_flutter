@@ -84,6 +84,7 @@ class FirestoreDatabaseService implements DatabaseService {
       jobId: jobId,
       startTime: startTime,
       endTime: endTime,
+      comment: comment,
     );
   }
 
