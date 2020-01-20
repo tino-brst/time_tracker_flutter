@@ -7,6 +7,10 @@ class Entry {
   final DateTime endTime;
   final String comment;
 
+  Duration get duration {
+    return endTime.difference(startTime);
+  }
+
   Entry({
     @required this.id,
     @required this.jobId,

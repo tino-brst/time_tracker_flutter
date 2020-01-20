@@ -22,8 +22,8 @@ class EntryModel extends Entry {
       : super(
           id: document.documentID,
           jobId: document.data['jobId'],
-          startTime: DateTime.fromMicrosecondsSinceEpoch(document.data['startTime']),
-          endTime: DateTime.fromMicrosecondsSinceEpoch(document.data['endTime']),
+          startTime: DateTime.fromMillisecondsSinceEpoch(document.data['startTime']),
+          endTime: DateTime.fromMillisecondsSinceEpoch(document.data['endTime']),
           comment: document.data['comment'],
         );
 
