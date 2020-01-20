@@ -39,7 +39,9 @@ class TabScaffold extends StatelessWidget {
             )
         ],
       ),
-      tabBuilder: (context, index) => tabs[index].builder(context),
+      tabBuilder: (_, index) {
+        return CupertinoTabView(builder: tabs[index].builder);
+      },
     );
   }
 }
