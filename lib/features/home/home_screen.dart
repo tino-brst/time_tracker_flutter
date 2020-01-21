@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../widgets/tab_scaffold.dart';
 import 'account/account_screen.dart';
+import 'entries/entries_screen.dart';
 import 'jobs/jobs_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -23,7 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
         TabData(
           title: 'Entries',
           iconData: Icons.view_headline,
-          builder: (_) => Container(),
+          builder: (_) => EntriesScreen(),
         ),
         TabData(
           title: 'Account',
