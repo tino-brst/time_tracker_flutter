@@ -22,7 +22,7 @@ class FirestoreDatabaseService implements DatabaseService {
   Stream<List<Job>> getJobsStream() {
     return _jobsCollection.snapshots().map((snapshot) {
       return snapshot.documents.map((document) {
-        return JobModel.fromDocument(document);
+        return JobModel.fromDocumentDataAndId(document.data, document.documentID);
       }).toList();
     });
   }
@@ -31,7 +31,7 @@ class FirestoreDatabaseService implements DatabaseService {
   Stream<List<Entry>> getEntriesStream(String jobId) {
     return _entriesCollection.where('jobId', isEqualTo: jobId).snapshots().map((snapshot) {
       return snapshot.documents.map((document) {
-        return EntryModel.fromDocument(document);
+        return EntryModel.fromDocumentDataAndId(document.data, document.documentID);
       }).toList();
     });
   }

@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 
 import '../entities/job.dart';
@@ -14,11 +13,11 @@ class JobModel extends Job {
           ratePerHour: ratePerHour,
         );
 
-  JobModel.fromDocument(DocumentSnapshot document)
+  JobModel.fromDocumentDataAndId(Map<String, dynamic> data, String id)
       : super(
-          id: document.documentID,
-          name: document.data['name'] as String,
-          ratePerHour: document.data['ratePerHour'] as int,
+          id: id,
+          name: data['name'] as String,
+          ratePerHour: data['ratePerHour'] as int,
         );
 
   Map<String, dynamic> toDocumentData() => {
