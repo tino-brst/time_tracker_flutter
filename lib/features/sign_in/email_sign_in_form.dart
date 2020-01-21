@@ -45,9 +45,9 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         _buildEmailTextField(),
-        SizedBox(height: 12),
+        const SizedBox(height: 12),
         _buildPasswordTextField(),
-        SizedBox(height: 32),
+        const SizedBox(height: 32),
         CustomFlatButton(
           // Sign in | Register
           primaryButtonText,
@@ -55,7 +55,7 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
           textColor: Colors.white,
           onPressed: _isSubmitEnabled ? _submit : null,
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         CustomFlatButton(
           // Toggle form
           secondaryButtonText,
@@ -116,7 +116,7 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
     });
   }
 
-  void _submit() async {
+  Future<void> _submit() async {
     setState(() {
       _areErrorMessagesEnabled = true;
       _isLoading = true;

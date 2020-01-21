@@ -8,7 +8,7 @@ class EditJobScreen extends StatefulWidget {
   final Job job;
   final DatabaseService _databaseService;
 
-  EditJobScreen(this._databaseService, {this.job});
+  const EditJobScreen(this._databaseService, {this.job});
 
   @override
   _EditJobScreenState createState() => _EditJobScreenState();
@@ -41,7 +41,7 @@ class _EditJobScreenState extends State<EditJobScreen> {
   Widget build(BuildContext context) {
     final isNewJob = widget.job == null;
     final appBarTitle = isNewJob ? 'New Job' : 'Edit Job';
-    final isFirstFieldAutofocusEnabled = isNewJob ? true : false;
+    final isFirstFieldAutofocusEnabled = isNewJob;
     final initialNameValue = widget.job?.name;
     final initialRatePerHourValue = widget.job?.ratePerHour?.toString();
 
@@ -51,6 +51,7 @@ class _EditJobScreenState extends State<EditJobScreen> {
         elevation: 0,
         actions: <Widget>[
           FlatButton(
+            onPressed: _save,
             child: Text(
               'Save',
               style: TextStyle(
@@ -59,7 +60,6 @@ class _EditJobScreenState extends State<EditJobScreen> {
                 fontWeight: FontWeight.normal,
               ),
             ),
-            onPressed: _save,
           )
         ],
       ),
@@ -78,19 +78,19 @@ class _EditJobScreenState extends State<EditJobScreen> {
                       validator: _nameValidator,
                       autofocus: isFirstFieldAutofocusEnabled,
                       onSaved: (value) => _name = value,
-                      decoration: InputDecoration(labelText: 'Name'),
+                      decoration: const InputDecoration(labelText: 'Name'),
                       textInputAction: TextInputAction.next,
                       onEditingComplete: () => _focusOn(_ratePerHourFocusNode),
                     ),
-                    SizedBox(height: 12),
+                    const SizedBox(height: 12),
                     TextFormField(
                       initialValue: initialRatePerHourValue,
                       enabled: !_isLoading,
                       validator: _ratePerHourValidator,
                       focusNode: _ratePerHourFocusNode,
                       onSaved: (value) => _ratePerHour = int.parse(value),
-                      keyboardType: TextInputType.numberWithOptions(signed: false, decimal: false),
-                      decoration: InputDecoration(labelText: 'Rate per hour'),
+                      keyboardType: const TextInputType.numberWithOptions(signed: false, decimal: false),
+                      decoration: const InputDecoration(labelText: 'Rate per hour'),
                     ),
                   ],
                 ),
@@ -100,7 +100,7 @@ class _EditJobScreenState extends State<EditJobScreen> {
           if (_isLoading)
             Container(
               color: Colors.black12,
-              child: Center(
+              child: const Center(
                 child: CircularProgressIndicator(),
               ),
             ),
@@ -115,7 +115,7 @@ class _EditJobScreenState extends State<EditJobScreen> {
     });
   }
 
-  void _save() async {
+  Future<void> _save() async {
     final form = _formKey.currentState;
     final isFormValid = form.validate();
 

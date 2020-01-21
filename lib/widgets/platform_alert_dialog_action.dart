@@ -17,17 +17,17 @@ class PlatformAlertDialogAction extends StatelessPlatformWidget {
   @override
   Widget buildCupertinoWidget(BuildContext context) {
     return CupertinoDialogAction(
-      child: child,
       isDefaultAction: isDefaultAction,
       onPressed: onPressed,
+      child: child,
     );
   }
 
   @override
   Widget buildMaterialWidget(BuildContext context) {
     return FlatButton(
-      child: child,
       onPressed: onPressed,
+      child: child,
     );
   }
 }

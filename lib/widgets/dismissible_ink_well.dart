@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 
 class DismissibleInkWell extends StatelessWidget {
-  final Key key;
   final VoidCallback onTap;
   final VoidCallback onDismissed;
   final Widget child;
 
   const DismissibleInkWell({
-    @required this.key,
+    @required Key key,
     this.child,
     this.onTap,
     this.onDismissed,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

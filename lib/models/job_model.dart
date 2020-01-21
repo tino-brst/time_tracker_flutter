@@ -17,8 +17,8 @@ class JobModel extends Job {
   JobModel.fromDocument(DocumentSnapshot document)
       : super(
           id: document.documentID,
-          name: document.data['name'],
-          ratePerHour: document.data['ratePerHour'],
+          name: document.data['name'] as String,
+          ratePerHour: document.data['ratePerHour'] as int,
         );
 
   Map<String, dynamic> toDocumentData() => {

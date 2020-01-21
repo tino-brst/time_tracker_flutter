@@ -22,7 +22,7 @@ class EmptyState extends StatelessWidget {
             style: TextStyle(fontSize: 32, color: Colors.black54),
             textAlign: TextAlign.center,
           ),
-          SizedBox(height: 12),
+          const SizedBox(height: 12),
           Text(
             subtitle,
             style: TextStyle(fontSize: 18, color: Colors.black45),

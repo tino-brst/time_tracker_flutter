@@ -17,7 +17,7 @@ class JobEntriesScreen extends StatelessWidget {
   final DatabaseService databaseService;
   final Job job;
 
-  JobEntriesScreen(this.databaseService, this.job);
+  const JobEntriesScreen(this.databaseService, this.job);
 
   static Future<void> show(BuildContext context, Job job) {
     final databaseService = Provider.of<DatabaseService>(context, listen: false);
@@ -41,11 +41,11 @@ class JobEntriesScreen extends StatelessWidget {
       onPressed: _newEntry,
     );
 
-    final emptyListTitle = 'No entries yet';
-    final emptyListSubtitle = 'You can create a new one \ntapping the + button';
-    final emptyListBody = EmptyState(title: emptyListTitle, subtitle: emptyListSubtitle);
+    const emptyListTitle = 'No entries yet';
+    const emptyListSubtitle = 'You can create a new one \ntapping the + button';
+    const emptyListBody = EmptyState(title: emptyListTitle, subtitle: emptyListSubtitle);
 
-    final loadingListBody = Center(child: CircularProgressIndicator());
+    const loadingListBody = Center(child: CircularProgressIndicator());
 
     return Scaffold(
       appBar: AppBar(

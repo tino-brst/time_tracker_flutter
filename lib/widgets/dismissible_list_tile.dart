@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 
 class DismissibleListTile extends StatelessWidget {
-  final Key key;
   final VoidCallback onTap;
   final VoidCallback onDismissed;
   final String title;
 
   const DismissibleListTile({
-    @required this.key,
+    @required Key key,
     this.onTap,
     this.onDismissed,
     this.title,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +25,7 @@ class DismissibleListTile extends StatelessWidget {
       child: ListTile(
         title: titleWidget,
         onTap: onTap,
-        contentPadding: EdgeInsets.only(left: 16, right: 10),
+        contentPadding: const EdgeInsets.only(left: 16, right: 10),
         trailing: trailingIcon,
       ),
     );

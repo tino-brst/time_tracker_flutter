@@ -16,21 +16,21 @@ class JobsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final databaseService = Provider.of<DatabaseService>(context, listen: false);
 
-    final appBarTitle = 'Jobs';
+    const appBarTitle = Text('Jobs');
     final newJobButton = IconButton(
       icon: Icon(Icons.add, color: Colors.white),
       onPressed: () => _createNewJob(context, databaseService),
     );
 
-    final emptyListTitle = 'No jobs yet';
-    final emptyListSubtitle = 'You can create a new one \ntapping the + button';
-    final emptyListBody = EmptyState(title: emptyListTitle, subtitle: emptyListSubtitle);
+    const emptyListTitle = 'No jobs yet';
+    const emptyListSubtitle = 'You can create a new one \ntapping the + button';
+    const emptyListBody = EmptyState(title: emptyListTitle, subtitle: emptyListSubtitle);
 
-    final loadingListBody = Center(child: CircularProgressIndicator());
+    const loadingListBody = Center(child: CircularProgressIndicator());
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(appBarTitle),
+        title: appBarTitle,
         centerTitle: Platform.isIOS,
         elevation: 0,
         actions: [newJobButton],
@@ -59,12 +59,12 @@ class JobsScreen extends StatelessWidget {
     );
   }
 
-  void _createNewJob(BuildContext context, databaseService) async {
-    await EditJobScreen.show(context, databaseService);
+  void _createNewJob(BuildContext context, DatabaseService databaseService) {
+    EditJobScreen.show(context, databaseService);
   }
 
-  void _goToJobEntries(BuildContext context, Job job) async {
-    await JobEntriesScreen.show(context, job);
+  void _goToJobEntries(BuildContext context, Job job) {
+    JobEntriesScreen.show(context, job);
   }
 
   void _deleteJob(DatabaseService databaseService, Job job) {

@@ -7,7 +7,7 @@ class EmailSignInScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Sign in'),
+        title: const Text('Sign in'),
         elevation: 0,
       ),
       body: SingleChildScrollView(

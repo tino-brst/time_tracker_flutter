@@ -13,7 +13,7 @@ class FirestoreDatabaseService implements DatabaseService {
   CollectionReference _jobsCollection;
   CollectionReference _entriesCollection;
 
-  FirestoreDatabaseService({@required userId}) : _userId = userId {
+  FirestoreDatabaseService({@required String userId}) : _userId = userId {
     _jobsCollection = _firestore.collection(Path.jobs(_userId));
     _entriesCollection = _firestore.collection(Path.entries(_userId));
   }

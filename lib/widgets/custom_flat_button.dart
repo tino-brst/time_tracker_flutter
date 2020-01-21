@@ -20,6 +20,13 @@ class CustomFlatButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FlatButton(
+      padding: padding ?? const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+      color: color,
+      onPressed: onPressed,
+      disabledColor: color?.withOpacity(0.5),
+      disabledTextColor: textColor,
+      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
       child: Stack(
         alignment: Alignment.center,
         children: <Widget>[
@@ -35,15 +42,6 @@ class CustomFlatButton extends StatelessWidget {
             ),
           )
         ],
-      ),
-      padding: padding ?? EdgeInsets.symmetric(vertical: 12, horizontal: 12),
-      color: color,
-      onPressed: onPressed,
-      disabledColor: color?.withOpacity(0.5),
-      disabledTextColor: textColor,
-      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(4),
       ),
     );
   }

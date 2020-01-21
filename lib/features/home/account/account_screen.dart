@@ -11,7 +11,7 @@ class AccountScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final authService = Provider.of<AuthService>(context, listen: false);
 
-    final appBarTitle = 'Account';
+    const appBarTitle = Text('Account');
     final signOutButton = IconButton(
       icon: Icon(Icons.exit_to_app, color: Colors.white),
       onPressed: () => _signOut(context, authService),
@@ -19,7 +19,7 @@ class AccountScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(appBarTitle),
+        title: appBarTitle,
         centerTitle: Platform.isIOS,
         elevation: 0,
         actions: [signOutButton],
@@ -27,7 +27,7 @@ class AccountScreen extends StatelessWidget {
     );
   }
 
-  void _signOut(BuildContext context, AuthService authService) async {
+  Future<void> _signOut(BuildContext context, AuthService authService) async {
     final didConfirmSignOut = await PlatformAlertDialog(
       title: 'Sign Out',
       content: 'Are you sure you want to sign out?',

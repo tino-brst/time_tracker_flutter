@@ -10,7 +10,7 @@ class SignInScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Time Tracker'),
+        title: const Text('Time Tracker'),
         elevation: 0,
       ),
       body: _buildContent(context),
@@ -35,7 +35,7 @@ class SignInScreen extends StatelessWidget {
               child: _buildHeader(isLoading),
             ),
           ),
-          SizedBox(height: 48),
+          const SizedBox(height: 48),
           CustomFlatButton(
             'Sign in with Google',
             color: Colors.grey.shade300,
@@ -43,28 +43,28 @@ class SignInScreen extends StatelessWidget {
             trailing: Image.asset('images/google-logo.png'),
             onPressed: isLoading ? null : signInWithGoogle,
           ),
-          SizedBox(height: 12),
+          const SizedBox(height: 12),
           CustomFlatButton(
             'Sign in with Facebook',
-            color: Color(0xFF3C599D),
+            color: const Color(0xFF3C599D),
             textColor: Colors.white,
             trailing: Image.asset('images/facebook-logo.png'),
             onPressed: null,
           ),
-          SizedBox(height: 12),
+          const SizedBox(height: 12),
           CustomFlatButton(
             'Sign in with Email',
             color: Colors.teal,
             textColor: Colors.white,
             onPressed: isLoading ? null : () => _signInWithEmail(context),
           ),
-          SizedBox(height: 24),
+          const SizedBox(height: 24),
           Text(
             'or',
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.black54),
           ),
-          SizedBox(height: 12),
+          const SizedBox(height: 12),
           CustomFlatButton(
             'Sign in anonymously',
             padding: EdgeInsets.zero,
@@ -78,7 +78,7 @@ class SignInScreen extends StatelessWidget {
 
   Widget _buildHeader(bool isLoading) {
     if (isLoading) {
-      return CircularProgressIndicator();
+      return const CircularProgressIndicator();
     } else {
       return Text(
         'Sign in',

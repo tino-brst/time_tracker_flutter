@@ -31,7 +31,7 @@ class AuthSwitch extends StatelessWidget {
             );
           }
         } else {
-          return Scaffold(
+          return const Scaffold(
             body: Center(
               child: CircularProgressIndicator(),
             ),

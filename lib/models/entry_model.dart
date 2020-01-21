@@ -21,10 +21,10 @@ class EntryModel extends Entry {
   EntryModel.fromDocument(DocumentSnapshot document)
       : super(
           id: document.documentID,
-          jobId: document.data['jobId'],
-          startTime: DateTime.fromMillisecondsSinceEpoch(document.data['startTime']),
-          endTime: DateTime.fromMillisecondsSinceEpoch(document.data['endTime']),
-          comment: document.data['comment'],
+          jobId: document.data['jobId'] as String,
+          startTime: DateTime.fromMillisecondsSinceEpoch(document.data['startTime'] as int),
+          endTime: DateTime.fromMillisecondsSinceEpoch(document.data['endTime'] as int),
+          comment: document.data['comment'] as String,
         );
 
   Map<String, dynamic> toDocumentData() => {

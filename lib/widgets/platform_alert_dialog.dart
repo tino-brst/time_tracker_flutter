@@ -60,9 +60,9 @@ class PlatformAlertDialog extends StatelessPlatformWidget {
     if (cancelActionText != null) {
       actions.add(
         PlatformAlertDialogAction(
-          child: Text(cancelActionText),
           isDefaultAction: true,
           onPressed: () => Navigator.of(context).pop(false),
+          child: Text(cancelActionText),
         ),
       );
     }
@@ -70,8 +70,8 @@ class PlatformAlertDialog extends StatelessPlatformWidget {
     if (primaryActionText != null) {
       actions.add(
         PlatformAlertDialogAction(
-          child: Text(primaryActionText),
           onPressed: () => Navigator.of(context).pop(true),
+          child: Text(primaryActionText),
         ),
       );
     }

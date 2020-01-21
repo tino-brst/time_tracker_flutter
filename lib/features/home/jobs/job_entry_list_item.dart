@@ -7,7 +7,7 @@ class JobEntryListItem extends StatelessWidget {
   final Job job;
   final Entry entry;
 
-  JobEntryListItem(this.job, this.entry);
+  const JobEntryListItem(this.job, this.entry);
 
   @override
   Widget build(BuildContext context) {
@@ -22,38 +22,38 @@ class JobEntryListItem extends StatelessWidget {
     final chevronIcon = Icon(Icons.chevron_right, color: Colors.black38);
 
     return Padding(
-      padding: EdgeInsets.fromLTRB(16, 14, 10, 14),
+      padding: const EdgeInsets.fromLTRB(16, 14, 10, 14),
       child: Row(
         children: <Widget>[
           Expanded(
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Row(children: <Widget>[
-                  Text(dayOfTheWeek, style: TextStyle(fontSize: 16)),
-                  SizedBox(width: 8),
+                  Text(dayOfTheWeek, style: const TextStyle(fontSize: 16)),
+                  const SizedBox(width: 8),
                   Text(date, style: TextStyle(fontSize: 16, color: Colors.black45)),
                 ]),
-                SizedBox(height: 4),
+                const SizedBox(height: 4),
                 Row(children: <Widget>[
                   Text('$startTime - $endTime'),
-                  SizedBox(width: 8),
+                  const SizedBox(width: 8),
                   Text(duration, style: TextStyle(color: Colors.black45)),
                 ]),
-                SizedBox(height: 2),
+                const SizedBox(height: 2),
                 if (entry.comment != null) Text(entry.comment),
               ],
-              crossAxisAlignment: CrossAxisAlignment.start,
             ),
           ),
           Container(
-            child: Text(formattedIncome, style: TextStyle(color: Colors.white)),
-            padding: EdgeInsets.symmetric(vertical: 2, horizontal: 4),
+            padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 4),
             decoration: ShapeDecoration(
               color: Colors.green.shade500,
               shape: ContinuousRectangleBorder(borderRadius: BorderRadius.circular(8)),
             ),
+            child: Text(formattedIncome, style: TextStyle(color: Colors.white)),
           ),
-          SizedBox(width: 4),
+          const SizedBox(width: 4),
           chevronIcon,
         ],
       ),
