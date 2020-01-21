@@ -92,7 +92,9 @@ class SignInScreen extends StatelessWidget {
   }
 
   Future<void> _signInWithEmail(BuildContext context) async {
+    // TODO replace with (not implemented) 'show()' method from the EmailSignInScreen
     Navigator.of(context).push(
+      // TODO replace with platform aware PlatformPageRoute (for proper iOS transitions)
       MaterialPageRoute(
         fullscreenDialog: true,
         builder: (_) => EmailSignInScreen(),

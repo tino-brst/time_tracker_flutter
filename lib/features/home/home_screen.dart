@@ -11,8 +11,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int _currentTab = 0;
-
   @override
   Widget build(BuildContext context) {
     return TabScaffold(
@@ -33,12 +31,6 @@ class _HomeScreenState extends State<HomeScreen> {
           builder: (_) => AccountScreen(),
         )
       ],
-      currentTab: _currentTab,
-      onTabChange: (index) {
-        setState(() {
-          _currentTab = index;
-        });
-      },
     );
   }
 }

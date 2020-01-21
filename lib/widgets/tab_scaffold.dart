@@ -13,26 +13,27 @@ class TabData {
         assert(builder != null);
 }
 
-// TODO make it a statefull widget that keeps track of the current tab internally?
-class TabScaffold extends StatelessWidget {
+class TabScaffold extends StatefulWidget {
   final List<TabData> tabs;
-  final void Function(int) onTabChange;
-  final int currentTab;
 
-  const TabScaffold({
-    @required this.tabs,
-    @required this.onTabChange,
-    this.currentTab = 0,
-  });
+  const TabScaffold({@required this.tabs});
+
+  @override
+  _TabScaffoldState createState() => _TabScaffoldState();
+}
+
+class _TabScaffoldState extends State<TabScaffold> {
+  int _currentTab = 0;
 
   @override
   Widget build(BuildContext context) {
+    // TODO add WillPopScope wrapper to avoid exiting app with Androids back button
     return CupertinoTabScaffold(
       tabBar: CupertinoTabBar(
-        onTap: onTabChange,
-        currentIndex: currentTab,
+        onTap: _setCurrentTab,
+        currentIndex: _currentTab,
         items: [
-          for (final tab in tabs)
+          for (final tab in widget.tabs)
             BottomNavigationBarItem(
               title: Text(tab.title),
               icon: tab.iconData != null ? Icon(tab.iconData) : null,
@@ -40,8 +41,15 @@ class TabScaffold extends StatelessWidget {
         ],
       ),
       tabBuilder: (_, index) {
-        return CupertinoTabView(builder: tabs[index].builder);
+        return CupertinoTabView(builder: widget.tabs[index].builder);
       },
     );
+  }
+
+  // TODO add pop-to-root behaviour when tapping an already active tab
+  void _setCurrentTab(int value) {
+    setState(() {
+      _currentTab = value;
+    });
   }
 }
