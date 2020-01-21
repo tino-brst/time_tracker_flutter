@@ -1,6 +1,7 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 
-class Job {
+class Job extends Equatable {
   final String id;
   final String name;
   final int ratePerHour;
@@ -17,4 +18,7 @@ class Job {
   String toString() {
     return 'id: $id, name: $name, ratePerHour: $ratePerHour';
   }
+
+  @override
+  List<Object> get props => [id, name, ratePerHour];
 }
