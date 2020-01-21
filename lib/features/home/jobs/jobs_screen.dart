@@ -4,26 +4,19 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../entities/job.dart';
-import '../../../services/auth_service.dart';
 import '../../../services/database_service.dart';
 import '../../../widgets/dismissible_list_tile.dart';
 import '../../../widgets/empty_state.dart';
 import '../../../widgets/generic_list_view.dart';
-import '../../../widgets/platform_alert_dialog.dart';
 import 'edit_job_screen.dart';
 import 'job_entries_screen.dart';
 
 class JobsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final authService = Provider.of<AuthService>(context, listen: false);
     final databaseService = Provider.of<DatabaseService>(context, listen: false);
 
     final appBarTitle = 'Jobs';
-    final signOutButton = IconButton(
-      icon: Icon(Icons.exit_to_app, color: Colors.white),
-      onPressed: () => _signOut(context, authService),
-    );
     final newJobButton = IconButton(
       icon: Icon(Icons.add, color: Colors.white),
       onPressed: () => _createNewJob(context, databaseService),
@@ -40,10 +33,7 @@ class JobsScreen extends StatelessWidget {
         title: Text(appBarTitle),
         centerTitle: Platform.isIOS,
         elevation: 0,
-        actions: [
-          signOutButton,
-          newJobButton,
-        ],
+        actions: [newJobButton],
       ),
       body: StreamBuilder<List<Job>>(
         stream: databaseService.getJobsStream(),
@@ -67,17 +57,6 @@ class JobsScreen extends StatelessWidget {
         },
       ),
     );
-  }
-
-  void _signOut(BuildContext context, AuthService authService) async {
-    final didConfirmSignOut = await PlatformAlertDialog(
-      title: 'Sign Out',
-      content: 'Are you sure you want to sign out?',
-      primaryActionText: 'Sign Out',
-      cancelActionText: 'Cancel',
-    ).show(context);
-
-    if (didConfirmSignOut) authService.signOut();
   }
 
   void _createNewJob(BuildContext context, databaseService) async {

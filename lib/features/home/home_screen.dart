@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../widgets/tab_scaffold.dart';
+import 'account/account_screen.dart';
 import 'jobs/jobs_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -29,7 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
         TabData(
           title: 'Account',
           iconData: Icons.person,
-          builder: (_) => Container(),
+          builder: (_) => AccountScreen(),
         )
       ],
       currentTab: _currentTab,
