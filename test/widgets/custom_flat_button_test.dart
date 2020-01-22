@@ -7,7 +7,7 @@ void main() {
   group('CustomFlatButton', () {
     testWidgets('renders the passed text', (tester) async {
       await tester.pumpWidget(
-        DerectionalityWrapper(
+        DirectionalityWrapper(
           child: CustomFlatButton(
             'button',
             onPressed: () {},
@@ -21,7 +21,7 @@ void main() {
     testWidgets('executes the passed onPressed callback', (tester) async {
       var pressed = false;
       await tester.pumpWidget(
-        DerectionalityWrapper(
+        DirectionalityWrapper(
           child: CustomFlatButton(
             'button',
             onPressed: () => pressed = true,
