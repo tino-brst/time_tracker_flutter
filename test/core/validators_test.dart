@@ -7,10 +7,12 @@ void main() {
       final validator = NonEmptyStringValidator();
       expect(validator.isValid('foobar'), true);
     });
+
     test('considers invalid an empty string', () {
       final validator = NonEmptyStringValidator();
       expect(validator.isValid(''), false);
     });
+
     test('considers invalid a null input', () {
       final validator = NonEmptyStringValidator();
       expect(validator.isValid(null), false);

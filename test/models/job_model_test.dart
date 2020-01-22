@@ -13,7 +13,7 @@ void main() {
       expect(actual, equals(expected));
     });
 
-    test('toDocumentData creates a Map with the key-value pairs', () {
+    test('toDocumentData creates a Map with the correct key-value pairs', () {
       final actual = JobModel(id: 'foobar', name: 'bar', ratePerHour: 42).toDocumentData();
       final expected = {'name': 'bar', 'ratePerHour': 42};
 
