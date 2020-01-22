@@ -69,6 +69,7 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
   Widget _buildEmailTextField() {
     final showErrorMessage = _areErrorMessagesEnabled && !widget.emailValidator.isValid(_email);
     return TextField(
+      key: const Key('email'),
       controller: _emailController,
       focusNode: _emailFocusNode,
       keyboardType: TextInputType.emailAddress,
@@ -88,6 +89,7 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
   Widget _buildPasswordTextField() {
     final showErrorMessage = _areErrorMessagesEnabled && !widget.passwordValidator.isValid(_password);
     return TextField(
+      key: const Key('password'),
       controller: _passwordController,
       focusNode: _passwordFocusNode,
       textInputAction: TextInputAction.done,
