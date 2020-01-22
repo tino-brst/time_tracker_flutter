@@ -6,9 +6,9 @@
 include: package:lint/analysis_options.yaml
 
 # Enable/disable rules
-# linter:
-#   rules:
-#     name_of_the_rule: true|false
+linter:
+  rules:
+    unawaited_futures: true
 
 # Change the default severity of enabled rules
 # analyzer:
