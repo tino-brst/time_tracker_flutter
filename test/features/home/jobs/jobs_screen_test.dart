@@ -50,7 +50,7 @@ void main() {
       when(
         databaseService.getJobsStream(),
       ).thenAnswer(
-        (_) => Stream.value([Job(id: '42', name: 'job', ratePerHour: 42)]),
+        (_) => Stream.value([const Job(id: '42', name: 'job', ratePerHour: 42)]),
       );
 
       await pumpJobsScreen(tester, databaseService);

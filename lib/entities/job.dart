@@ -6,7 +6,7 @@ class Job extends Equatable {
   final String name;
   final int ratePerHour;
 
-  Job({
+  const Job({
     @required this.id,
     @required this.name,
     @required this.ratePerHour,

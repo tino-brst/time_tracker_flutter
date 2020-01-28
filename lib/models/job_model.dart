@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import '../entities/job.dart';
 
 class JobModel extends Job {
-  JobModel({
+  const JobModel({
     @required String id,
     @required String name,
     @required int ratePerHour,
